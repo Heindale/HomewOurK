@@ -9,6 +9,7 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 		void UpdateGroup(Groups group);
 		void CreateNewGroup(Groups group);
 		void DeleteGroupById(int groupId);
+
 		void InviteUser(int groupId, int userId);
 		void ExcludeUser(int groupId, int userId);
 	}

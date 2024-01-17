@@ -9,6 +9,7 @@ namespace HomewOurK.Application.Interfaces
 		void RegisterNewUser(Users user);
 		void UpdateUser(Users user);
 		void DeleteUserById(int userId);
+
 		void JoinGroup(int userId, int groupId);
 		void LeaveGroup(int userId, int groupId);
 	}

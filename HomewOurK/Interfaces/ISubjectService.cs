@@ -8,9 +8,10 @@ namespace HomewOurK.Application.Interfaces
 		List<Subjects> GetSubjectsByGroupId(int groupId);
 		void AddSubject(Subjects subject);
 		void UpdateSubject(Subjects subject);
-		void DeleteSubjectById(int subjectId);
-		void AddTeacher(int SubjectId, int TeacherId);
-		void DeleteTeacher(int SubjectId, int TeacherId);
+		void DeleteSubjectById(int subjectId, int groupId);
+
+		void AddTeacher(int subjectId, int teacherId);
+		void DeleteTeacher(int subjectId, int teacherId);
 		List<Teachers> GetTeacherBySubjectId(int subjectId, int groupId);
 	}
 }
