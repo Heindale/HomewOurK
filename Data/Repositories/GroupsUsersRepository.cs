@@ -21,7 +21,7 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();
 		}
 
-		public virtual void Delete(GroupsUsers groupsUsers)
+		public virtual void DeleteById(GroupsUsers groupsUsers)
 		{
 			_context.GroupsUsers.Remove(groupsUsers);
 			_context.SaveChanges();

@@ -21,14 +21,20 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();
 		}
 
-		public void Delete(Entity entity)
+		public void DeleteById(int Id)
 		{
-			_context.Set<Entity>().Remove(entity);
+			var entityDb = _context.Set<Entity>().FirstOrDefault(x => x.Id == Id);
+			if (entityDb == null)
+				throw new Exception("The Entity wasn't found or deleted!");
+			_context.Set<Entity>().Remove(entityDb);
 			_context.SaveChanges();
 		}
 
 		public void Update(Entity entity)
 		{
+			var entityDb = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
+			if (entityDb == null)
+				throw new Exception("The Entity wasn't found!");
 			_context.Set<Entity>().Update(entity);
 			_context.SaveChanges();
 		}
@@ -41,7 +47,7 @@ namespace HomewOurK.Persistence.Repositories
 		public Entity GetById(int id)
 		{
 			return _context.Set<Entity>().FirstOrDefault(x => x.Id == id) 
-				?? throw new Exception("The Entity was not found");
+				?? throw new Exception("The Entity wasn't found!");
 		}
 	}
 }
