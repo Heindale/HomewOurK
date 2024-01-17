@@ -13,22 +13,9 @@ namespace HomewOurK.Infrastructure.Services
             _teacherRepository = teacherRepository;
         }
 
-        public void AddSubject(Teachers teacher, Subjects subject)
+		public void AddSubject(int teacherId, int subjectId)
 		{
-			var dbTeacher = _teacherRepository.GetById(teacher.Id, teacher.GroupId);
-			if (dbTeacher == null)
-			{
-				throw new Exception("The Entity was not found");
-			}
-			try
-			{
-				dbTeacher.Subjects.Add(subject);
-				_teacherRepository.Update(dbTeacher);
-			}
-			catch ()
-			{
-                Console.WriteLine();
-            }
+			throw new NotImplementedException();
 		}
 
 		public void AddTeacher(Teachers teacher)
@@ -36,14 +23,19 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Add(teacher);
 		}
 
-		public void DeleteTeacher(Teachers teacher)
+		public void DeleteSubjectById(int teacherId, int subjectId)
 		{
-			_teacherRepository.Delete(teacher);
+			throw new NotImplementedException();
 		}
 
-		public List<Teachers> GetTeachersByGroupId(int groupId)
+		public void DeleteTeacherById(int teacherId, int groupId)
 		{
-			return _teacherRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+			_teacherRepository.Delete(new Teachers { Id = teacherId, GroupId = groupId });
+		}
+
+		public List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId)
+		{
+			throw new NotImplementedException();
 		}
 
 		public Teachers GetTeacherById(int teacherId, int groupId)
@@ -51,9 +43,14 @@ namespace HomewOurK.Infrastructure.Services
 			return _teacherRepository.GetById(teacherId, groupId);
 		}
 
+		public List<Teachers> GetTeachersByGroupId(int groupId)
+		{
+			return _teacherRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+		}
+
 		public void UpdateTeacher(Teachers teacher)
 		{
-			_teacherRepository.Update(teacher);
+			throw new NotImplementedException();
 		}
 	}
 }
