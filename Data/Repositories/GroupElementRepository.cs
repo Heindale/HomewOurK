@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
+using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 
 namespace HomewOurK.Persistence.Repositories
@@ -29,11 +30,12 @@ namespace HomewOurK.Persistence.Repositories
 				entity.Id = lastEntity.Id + 1;
 			}
 			_context.Set<Entity>().Add(entity);
-			_context.SaveChanges();
+			_context.SaveChanges();			
 		}
 
 		public void Delete(Entity entity)
 		{
+			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
 			_context.Set<Entity>().Remove(entity);
 			_context.SaveChanges();
 		}

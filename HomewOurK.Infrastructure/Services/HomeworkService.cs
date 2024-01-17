@@ -1,4 +1,5 @@
-﻿using HomewOurK.Domain.Entities;
+﻿using HomewOurK.Application.Interfaces.Repositories;
+using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Repositories;
 using HomewOurK.WebAPI.Services.Interfaces;
 
@@ -6,9 +7,9 @@ namespace HomewOurK.WebAPI.Services
 {
 	public class HomeworkService : IHomeworkService
 	{
-		private readonly SubjectElementRepository<Homeworks> _homeworkRepository;
+		private readonly ISubjectElementRepository<Homeworks> _homeworkRepository;
 
-		public HomeworkService(SubjectElementRepository<Homeworks> homeworkRepository) 
+		public HomeworkService(ISubjectElementRepository<Homeworks> homeworkRepository) 
 		{
 			_homeworkRepository = homeworkRepository;
 		}

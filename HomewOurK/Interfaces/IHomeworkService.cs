@@ -8,6 +8,6 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 		Homeworks GetHomeworkById(int homeworkId, int subjectId, int groupId);
 		void UpdateHomework(Homeworks homework);
 		void CreateNewHomework(Homeworks homework);
-		void DeleteHomework(Homeworks homework);
+		void DeleteHomeworkById(int homeworkId, int subjectId, int groupId);
 	}
 }
