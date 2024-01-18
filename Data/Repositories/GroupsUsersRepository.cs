@@ -1,5 +1,4 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
-using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 
@@ -24,13 +23,20 @@ namespace HomewOurK.Persistence.Repositories
 
 		public virtual void DeleteById(int groupId, int userId)
 		{
-			var dbEntity = _context.GroupsUsers.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId);
+			var dbEntity = _context.GroupsUsers
+				.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId);
+			if (dbEntity == null)
+				return; 
 			_context.GroupsUsers.Remove(dbEntity);
 			_context.SaveChanges();
 		}
 
 		public virtual void Update(GroupsUsers groupsUsers)
 		{
+			var dbEntity = _context.GroupsUsers
+				.FirstOrDefault(x => x.UserId == groupsUsers.UserId && x.GroupId == groupsUsers.GroupId);
+			if (dbEntity == null)
+				return;
 			_context.GroupsUsers.Update(groupsUsers);
 			_context.SaveChanges();
 		}
@@ -43,7 +49,7 @@ namespace HomewOurK.Persistence.Repositories
 		public GroupsUsers GetById(int groupId, int userId)
 		{
 			return _context.GroupsUsers.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId)
-				?? throw new Exception("The Entity was not found");
+				?? new GroupsUsers();
 		}
 	}
 }

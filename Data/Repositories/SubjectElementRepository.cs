@@ -18,7 +18,7 @@ namespace HomewOurK.Persistence.Repositories
 
 		public void Add(Entity entity)
 		{
-			var lastEntity = _context.Set<Entity>().OrderBy(x => x.Id)
+			var lastEntity = _context.Set<Entity>().OrderBy(x => x.GroupId).OrderBy(x => x.Id)
 							.LastOrDefault(x => x.GroupId == entity.GroupId 
 							&& x.SubjectId == entity.SubjectId);
 
@@ -35,10 +35,12 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();
 		}
 
-		public void Delete(int id, int subjectId, int groupId)
+		public void DeleteById(int id, int subjectId, int groupId)
 		{
 			var dbEntity = _context.Set<Entity>()
 				.FirstOrDefault(x => x.Id == id && x.GroupId == groupId && x.SubjectId == subjectId);
+			if (dbEntity == null)
+				return;
 			_context.Remove(dbEntity);
 			_context.SaveChanges();
 		}
