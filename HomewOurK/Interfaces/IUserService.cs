@@ -5,7 +5,7 @@ namespace HomewOurK.Application.Interfaces
 	public interface IUserService
 	{
 		Users GetUserById(int userId);
-		List<Groups> GetGroupsByUserId(int userId);
+		List<Users> GetUsersByGroupId(int groupId);
 		void RegisterNewUser(Users user);
 		void UpdateUser(Users user);
 		void DeleteUserById(int userId);

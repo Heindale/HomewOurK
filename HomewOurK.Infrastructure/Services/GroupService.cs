@@ -8,10 +8,14 @@ namespace HomewOurK.Infrastructure.Services
 	{
 		private readonly IBaseEntityRepository<Groups> _groupsRepository;
 
-		public GroupService(IBaseEntityRepository<Groups> groupsRepository)
+		private readonly IGroupsUsersRepository _groupsUsersRepository;
+
+		public GroupService(IBaseEntityRepository<Groups> groupsRepository, IGroupsUsersRepository groupsUsersRepository)
 		{
 			_groupsRepository = groupsRepository;
+			_groupsUsersRepository = groupsUsersRepository;
 		}
+
 		public void CreateNewGroup(Groups group)
 		{
 			_groupsRepository.Add(group);
@@ -19,32 +23,38 @@ namespace HomewOurK.Infrastructure.Services
 
 		public void DeleteGroupById(int groupId)
 		{
-			_groupsRepository.Delete(new Groups { Id = groupId });
+			_groupsRepository.DeleteById(groupId);
 		}
 
 		public void ExcludeUser(int groupId, int userId)
 		{
-			throw new NotImplementedException();
+			_groupsUsersRepository.DeleteById(groupId, userId);
 		}
 
 		public Groups GetGroupById(int groupId)
 		{
-			throw new NotImplementedException();
+			return _groupsRepository.GetById(groupId);
 		}
 
-		public List<Users> GetUsersByGroupId(int groupId)
+		public List<Groups> GetGroupsByUserId(int userId)
 		{
-			throw new NotImplementedException();
+			var groupsUsers = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).ToList();
+			List<Groups> groups = new List<Groups>();
+			for (int i = 0; i < groupsUsers.Count; i++)
+			{
+				groups.Add(_groupsRepository.GetById(groupsUsers[i].GroupId));
+			}
+			return groups;
 		}
 
 		public void InviteUser(int groupId, int userId)
 		{
-			throw new NotImplementedException();
+			_groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
 		}
 
 		public void UpdateGroup(Groups group)
 		{
-			throw new NotImplementedException();
+			_groupsRepository.Update(group);
 		}
 	}
 }

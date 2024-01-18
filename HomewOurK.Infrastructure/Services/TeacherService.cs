@@ -30,7 +30,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public void DeleteTeacherById(int teacherId, int groupId)
 		{
-			_teacherRepository.Delete(new Teachers { Id = teacherId, GroupId = groupId });
+			_teacherRepository.DeleteById(teacherId, groupId);
 		}
 
 		public List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId)
@@ -50,7 +50,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public void UpdateTeacher(Teachers teacher)
 		{
-			throw new NotImplementedException();
+			_teacherRepository.Update(teacher);
 		}
 	}
 }

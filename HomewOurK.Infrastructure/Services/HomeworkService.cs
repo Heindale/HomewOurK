@@ -14,29 +14,39 @@ namespace HomewOurK.WebAPI.Services
 			_homeworkRepository = homeworkRepository;
 		}
 
+		public void CompleteHomeworkById(int homeworkId, int subjectId, int groupId)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void CreateNewHomework(Homeworks homework)
 		{
-			_homeworkRepository.Add(homework);
+			throw new NotImplementedException();
 		}
 
-		public void DeleteHomework(Homeworks homework)
+		public void DeleteHomeworkById(int homeworkId, int subjectId, int groupId)
 		{
-			_homeworkRepository.Delete(homework);
+			throw new NotImplementedException();
 		}
 
-		public void UpdateHomework(Homeworks homework)
+		public Homeworks GetHomeworkById(int subjectId, int groupId)
 		{
-			_homeworkRepository.Update(homework);
-		}
-
-		public Homeworks GetHomeworkById(int homeworkId, int subjectId, int groupId)
-		{
-			return _homeworkRepository.GetById(homeworkId, subjectId, groupId);
+			throw new NotImplementedException();
 		}
 
 		public List<Homeworks> GetHomeworksByGroupId(int groupId)
 		{
-			return _homeworkRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+			throw new NotImplementedException();
+		}
+
+		public List<Homeworks> GetHomeworksBySubjectId(int groupId)
+		{
+			throw new NotImplementedException();
+		}
+
+		public void UpdateHomework(Homeworks homework)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }
