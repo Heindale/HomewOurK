@@ -1,6 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
-using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 
 namespace HomewOurK.Persistence.Repositories
@@ -22,13 +21,10 @@ namespace HomewOurK.Persistence.Repositories
 							.LastOrDefault(x => x.GroupId == entity.GroupId);
 
 			if (lastEntity == null)
-			{
 				entity.Id = 0;
-			}
 			else
-			{
 				entity.Id = lastEntity.Id + 1;
-			}
+
 			_context.Set<Entity>().Add(entity);
 			_context.SaveChanges();			
 		}
@@ -36,12 +32,18 @@ namespace HomewOurK.Persistence.Repositories
 		public void DeleteById(int id, int groupId)
 		{
 			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == id && x.GroupId == groupId);
+			if (dbEntity == null)
+				return; 
 			_context.Set<Entity>().Remove(dbEntity);
 			_context.SaveChanges();
 		}
 
 		public void Update(Entity entity)
 		{
+			var dbEntity = _context.Set<Entity>()
+				.FirstOrDefault(x => x.Id == entity.Id && x.GroupId == entity.GroupId);
+			if (dbEntity == null)
+				return;
 			_context.Set<Entity>().Update(entity);
 			_context.SaveChanges();
 		}
@@ -53,8 +55,8 @@ namespace HomewOurK.Persistence.Repositories
 
 		public Entity GetById(int id, int groupId)
 		{
-			return _context.Set<Entity>().FirstOrDefault(x => x.Id == id && x.GroupId == groupId) 
-				?? throw new Exception("The Entity was not found");
+			return (Entity)(_context.Set<Entity>().FirstOrDefault(x => x.Id == id && x.GroupId == groupId) 
+				?? new GroupElementEntity());
 		}
 	}
 }
