@@ -8,14 +8,22 @@ namespace HomewOurK.Infrastructure.Services
 	{
 		private readonly IGroupElementRepository<Teachers> _teacherRepository;
 
-        public TeacherService(IGroupElementRepository<Teachers> teacherRepository)
+		private readonly IGroupElementRepository<Subjects> _subjectsRepository;
+
+        public TeacherService(IGroupElementRepository<Teachers> teacherRepository, 
+			IGroupElementRepository<Subjects> subjectRepository)
         {
             _teacherRepository = teacherRepository;
+			_subjectsRepository = subjectRepository;
         }
 
-		public void AddSubject(int teacherId, int subjectId)
+		public void AddSubject(int teacherId, int groupId, int subjectId)
 		{
-			throw new NotImplementedException();
+			var teacher = _teacherRepository.GetById(teacherId, groupId);
+			if (teacher == null)
+				return;
+			teacher.Subjects.Add(_subjectsRepository.GetById(subjectId, groupId));
+			_teacherRepository.Update(teacher);
 		}
 
 		public void AddTeacher(Teachers teacher)
@@ -23,9 +31,13 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Add(teacher);
 		}
 
-		public void DeleteSubjectById(int teacherId, int subjectId)
+		public void DeleteSubjectById(int teacherId, int groupId, int subjectId)
 		{
-			throw new NotImplementedException();
+			var teacher = _teacherRepository.GetById(teacherId, groupId);
+			if (teacher == null)
+				return;
+			teacher.Subjects.Remove(_subjectsRepository.GetById(subjectId, groupId));
+			_teacherRepository.Update(teacher);
 		}
 
 		public void DeleteTeacherById(int teacherId, int groupId)
@@ -35,7 +47,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId)
 		{
-			throw new NotImplementedException();
+			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId).ToList();
 		}
 
 		public Teachers GetTeacherById(int teacherId, int groupId)

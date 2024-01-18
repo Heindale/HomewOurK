@@ -10,8 +10,8 @@ namespace HomewOurK.Application.Interfaces
         void UpdateTeacher(Teachers teacher);
         void DeleteTeacherById(int teacherId, int groupId);
 
-        void AddSubject(int teacherId, int subjectId);
-        void DeleteSubjectById(int teacherId, int subjectId);
+        void AddSubject(int teacherId, int groupId, int subjectId);
+        void DeleteSubjectById(int teacherId, int groupId, int subjectId);
         List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId);
     }
 }
