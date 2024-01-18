@@ -23,18 +23,18 @@ namespace HomewOurK.Persistence.Repositories
 
 		public void DeleteById(int Id)
 		{
-			var entityDb = _context.Set<Entity>().FirstOrDefault(x => x.Id == Id);
-			if (entityDb == null)
-				throw new Exception("The Entity wasn't found or deleted!");
-			_context.Set<Entity>().Remove(entityDb);
+			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == Id);
+			if (dbEntity == null)
+				return;
+			_context.Set<Entity>().Remove(dbEntity);
 			_context.SaveChanges();
 		}
-
+		
 		public void Update(Entity entity)
 		{
-			var entityDb = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
-			if (entityDb == null)
-				throw new Exception("The Entity wasn't found!");
+			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
+			if (dbEntity == null)
+				return;
 			_context.Set<Entity>().Update(entity);
 			_context.SaveChanges();
 		}
@@ -46,8 +46,8 @@ namespace HomewOurK.Persistence.Repositories
 
 		public Entity GetById(int id)
 		{
-			return _context.Set<Entity>().FirstOrDefault(x => x.Id == id) 
-				?? throw new Exception("The Entity wasn't found!");
+			return (Entity)(_context.Set<Entity>().FirstOrDefault(x => x.Id == id) 
+				?? new BaseEntity());
 		}
 	}
 }

@@ -33,10 +33,10 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();			
 		}
 
-		public void Delete(Entity entity)
+		public void DeleteById(int id, int groupId)
 		{
-			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
-			_context.Set<Entity>().Remove(entity);
+			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == id && x.GroupId == groupId);
+			_context.Set<Entity>().Remove(dbEntity);
 			_context.SaveChanges();
 		}
 

@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
+using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 
 namespace HomewOurK.Persistence.Repositories
@@ -34,9 +35,11 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();
 		}
 
-		public void Delete(Entity entity)
+		public void Delete(int id, int subjectId, int groupId)
 		{
-			_context.Remove(entity);
+			var dbEntity = _context.Set<Entity>()
+				.FirstOrDefault(x => x.Id == id && x.GroupId == groupId && x.SubjectId == subjectId);
+			_context.Remove(dbEntity);
 			_context.SaveChanges();
 		}
 
