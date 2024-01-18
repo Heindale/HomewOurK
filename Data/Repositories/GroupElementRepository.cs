@@ -17,8 +17,10 @@ namespace HomewOurK.Persistence.Repositories
 
 		public void Add(Entity entity)
 		{
-			var lastEntity = _context.Set<Entity>().OrderBy(x => x.Id)
-							.LastOrDefault(x => x.GroupId == entity.GroupId);
+			var lastEntity = _context.Set<Entity>()
+				.Where(x => x.GroupId == entity.GroupId)
+				.OrderBy(x => x.Id)
+				.LastOrDefault();
 
 			if (lastEntity == null)
 				entity.Id = 0;

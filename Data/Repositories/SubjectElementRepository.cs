@@ -1,6 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
-using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 
 namespace HomewOurK.Persistence.Repositories
@@ -9,18 +8,19 @@ namespace HomewOurK.Persistence.Repositories
 	{
 		private readonly ApplicationContext _context;
 
-        public SubjectElementRepository(ApplicationContext context)
-        {
-            _context = context;
-        }
+		public SubjectElementRepository(ApplicationContext context)
+		{
+			_context = context;
+		}
 
-        public IQueryable<Entity> Entities => _context.Set<Entity>();
+		public IQueryable<Entity> Entities => _context.Set<Entity>();
 
 		public void Add(Entity entity)
 		{
-			var lastEntity = _context.Set<Entity>().OrderBy(x => x.GroupId).OrderBy(x => x.Id)
-							.LastOrDefault(x => x.GroupId == entity.GroupId 
-							&& x.SubjectId == entity.SubjectId);
+			var lastEntity = _context.Set<Entity>()
+				.Where(x => x.GroupId == entity.GroupId && x.SubjectId == entity.SubjectId)
+				.OrderBy(x => x.Id)
+				.LastOrDefault();
 
 			if (lastEntity == null)
 			{
@@ -47,6 +47,10 @@ namespace HomewOurK.Persistence.Repositories
 
 		public void Update(Entity entity)
 		{
+			var dbEntity = _context.Set<Entity>()
+				.FirstOrDefault(x => x.Id == entity.Id && x.GroupId == entity.GroupId && x.SubjectId == entity.SubjectId);
+			if (dbEntity == null)
+				return;
 			_context.Set<Entity>().Update(entity);
 			_context.SaveChanges();
 		}
@@ -58,9 +62,9 @@ namespace HomewOurK.Persistence.Repositories
 
 		public Entity GetById(int id, int subjectId, int groupId)
 		{
-			return _context.Set<Entity>().FirstOrDefault(x => x.Id == id 
+			return (Entity)(_context.Set<Entity>().FirstOrDefault(x => x.Id == id
 			&& x.SubjectId == subjectId && x.GroupId == groupId)
-				?? throw new Exception("The Entity was not found");
+				?? new SubjectElementEntity());
 		}
 	}
 }
