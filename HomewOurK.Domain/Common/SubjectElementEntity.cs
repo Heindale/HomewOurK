@@ -12,6 +12,6 @@ namespace HomewOurK.Domain.Common
 		[Required]
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int SubjectId { get; set; }
-		public Subjects? Subject { get; set; }
+		public Subject? Subject { get; set; }
 	}
 }

@@ -6,12 +6,12 @@ namespace HomewOurK.Infrastructure.Services
 {
     public class TeacherService : ITeacherService
 	{
-		private readonly IGroupElementRepository<Teachers> _teacherRepository;
+		private readonly IGroupElementRepository<Teacher> _teacherRepository;
 
-		private readonly IGroupElementRepository<Subjects> _subjectsRepository;
+		private readonly IGroupElementRepository<Subject> _subjectsRepository;
 
-        public TeacherService(IGroupElementRepository<Teachers> teacherRepository, 
-			IGroupElementRepository<Subjects> subjectRepository)
+        public TeacherService(IGroupElementRepository<Teacher> teacherRepository, 
+			IGroupElementRepository<Subject> subjectRepository)
         {
             _teacherRepository = teacherRepository;
 			_subjectsRepository = subjectRepository;
@@ -26,7 +26,7 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Update(teacher);
 		}
 
-		public void AddTeacher(Teachers teacher)
+		public void AddTeacher(Teacher teacher)
 		{
 			_teacherRepository.Add(teacher);
 		}
@@ -45,22 +45,22 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.DeleteById(teacherId, groupId);
 		}
 
-		public List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId)
+		public List<Subject> GetSubjectsByTeacherId(int teacherId, int groupId)
 		{
 			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId).ToList();
 		}
 
-		public Teachers GetTeacherById(int teacherId, int groupId)
+		public Teacher GetTeacherById(int teacherId, int groupId)
 		{
 			return _teacherRepository.GetById(teacherId, groupId);
 		}
 
-		public List<Teachers> GetTeachersByGroupId(int groupId)
+		public List<Teacher> GetTeachersByGroupId(int groupId)
 		{
 			return _teacherRepository.Entities.Where(x => x.GroupId == groupId).ToList();
 		}
 
-		public void UpdateTeacher(Teachers teacher)
+		public void UpdateTeacher(Teacher teacher)
 		{
 			_teacherRepository.Update(teacher);
 		}

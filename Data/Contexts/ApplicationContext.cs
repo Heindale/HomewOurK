@@ -8,13 +8,13 @@ namespace HomewOurK.Persistence.Contexts
 		public ApplicationContext() : base() { }
 		public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
-		public DbSet<Groups> Groups { get; set; }
-		public DbSet<Homeworks> Homeworks { get; set; }
-		public DbSet<Subjects> Subjects { get; set; }
-		public DbSet<Teachers> Teachers { get; set; }
-		public DbSet<Users> Users { get; set; }
+		public DbSet<Group> Groups { get; set; }
+		public DbSet<Homework> Homeworks { get; set; }
+		public DbSet<Subject> Subjects { get; set; }
+		public DbSet<Teacher> Teachers { get; set; }
+		public DbSet<User> Users { get; set; }
 		public DbSet<GroupsUsers> GroupsUsers { get; set; }
-		public DbSet<Attachments> Attachments { get; set; }
+		public DbSet<Attachment> Attachments { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
@@ -23,7 +23,7 @@ namespace HomewOurK.Persistence.Contexts
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
-			modelBuilder.Entity<Groups>()
+			modelBuilder.Entity<Group>()
 				.HasMany(c => c.Users)
 				.WithMany(s => s.Groups)
 				.UsingEntity<GroupsUsers>();

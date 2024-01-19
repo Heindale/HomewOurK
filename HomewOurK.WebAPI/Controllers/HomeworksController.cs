@@ -14,12 +14,12 @@ namespace HomewOurK.WebAPI.Controllers
 			_homeworkService = homeworkService;
 		}
 		[HttpGet]
-		public IEnumerable<Homeworks> GetHomeworks(int id)
+		public IEnumerable<Homework> GetHomeworks(int id)
 		{
 			return _homeworkService.GetHomeworksByGroupId(id);
 		}
 		[HttpGet]
-		public Homeworks GetHomework(int id, int subjectId, int groupId)
+		public Homework GetHomework(int id, int subjectId, int groupId)
 		{
 			return _homeworkService.GetHomeworkById(id, subjectId, groupId);
 		}

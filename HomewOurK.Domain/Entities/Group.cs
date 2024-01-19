@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomewOurK.Domain.Entities
 {
-	public class Groups : BaseEntity
+	public class Group : BaseEntity
 	{
 		[Required]
 		[StringLength(25)]
@@ -15,7 +15,7 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(25)]
 		public string? GroupType { get; set; }
 
-		public List<Users> Users { get; set; } = new List<Users>();
+		public List<User> Users { get; set; } = new List<User>();
 		public List<GroupsUsers> GroupsUsers { get; set; } = new List<GroupsUsers>();
 	}
 }

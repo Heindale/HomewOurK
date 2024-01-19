@@ -4,14 +4,14 @@ namespace HomewOurK.Application.Interfaces
 {
     public interface ITeacherService
     {
-        Teachers GetTeacherById(int teacherId, int groupId);
-        List<Teachers> GetTeachersByGroupId(int groupId);
-        void AddTeacher(Teachers teacher);
-        void UpdateTeacher(Teachers teacher);
-        void DeleteTeacher(Teachers teacher);
+        Teacher GetTeacherById(int teacherId, int groupId);
+        IEnumerable<Teacher> GetTeachersByGroupId(int groupId);
+        bool AddTeacher(Teacher teacher);
+        bool UpdateTeacher(Teacher teacher);
+        bool DeleteTeacher(Teacher teacher);
 
-        void AddSubject(int teacherId, int groupId, int subjectId);
-        void DeleteSubjectById(int teacherId, int groupId, int subjectId);
-        List<Subjects> GetSubjectsByTeacherId(int teacherId, int groupId);
+        bool AddSubject(int teacherId, int groupId, int subjectId);
+        bool DeleteSubjectById(int teacherId, int groupId, int subjectId);
+        IEnumerable<Subject> GetSubjectsByTeacherId(int teacherId, int groupId);
     }
 }

@@ -10,47 +10,47 @@ using NUnit.Framework;
 public class BaseEntityRepositoryTests
 {
 	private ApplicationContext _context;
-	private IBaseEntityRepository<Groups> _repository;
+	private IBaseEntityRepository<Group> _repository;
 
 	[SetUp]
 	public void Setup()
 	{
 		_context = new ApplicationContext(); // Вам нужно убедиться, что используется тестовый контекст БД
-		_repository = new BaseEntityRepository<Groups>(_context);
+		_repository = new BaseEntityRepository<Group>(_context);
 	}
 
 	[Test]
 	public void Add_EntitySuccessfullyAdded()
 	{
 		// Arrange
-		var entity = new Groups { Id = 1, Name = "Test" };
+		var entity = new Group { Id = 1, Name = "Test" };
 
 		// Act
 		_repository.Add(entity);
 
 		// Assert
-		Assert.AreEqual(1, _context.Set<Groups>().Count());
+		Assert.AreEqual(1, _context.Set<Group>().Count());
 	}
 
 	[Test]
 	public void Delete_EntitySuccessfullyDeleted()
 	{
 		// Arrange
-		var entity = new Groups { Id = 2, Name = "Test2" };
+		var entity = new Group { Id = 2, Name = "Test2" };
 		_repository.Add(entity);
 
 		// Act
 		_repository.Delete(entity.Id);
 
 		// Assert
-		Assert.AreEqual(0, _context.Set<Groups>().Count());
+		Assert.AreEqual(0, _context.Set<Group>().Count());
 	}
 
 	[Test]
 	public void Update_EntitySuccessfullyUpdated()
 	{
 		// Arrange
-		var entity = new Groups { Id = 3, Name = "Test3" };
+		var entity = new Group { Id = 3, Name = "Test3" };
 		_repository.Add(entity);
 
 		// Act
@@ -58,7 +58,7 @@ public class BaseEntityRepositoryTests
 		_repository.Update(entity);
 
 		// Assert
-		var updatedEntity = _context.Set<Groups>().FirstOrDefault(e => e.Id == entity.Id);
+		var updatedEntity = _context.Set<Group>().FirstOrDefault(e => e.Id == entity.Id);
 		Assert.IsNotNull(updatedEntity);
 		Assert.AreEqual("UpdatedTest", updatedEntity.Name);
 	}
@@ -67,8 +67,8 @@ public class BaseEntityRepositoryTests
 	public void GetAll_ReturnsAllEntities()
 	{
 		// Arrange
-		_repository.Add(new Groups { Id = 4, Name = "Test4" });
-		_repository.Add(new Groups { Id = 5, Name = "Test5" });
+		_repository.Add(new Group { Id = 4, Name = "Test4" });
+		_repository.Add(new Group { Id = 5, Name = "Test5" });
 
 		// Act
 		var entities = _repository.GetAll();
@@ -81,7 +81,7 @@ public class BaseEntityRepositoryTests
 	public void GetById_ReturnsEntityWithMatchingId()
 	{
 		// Arrange
-		_repository.Add(new Groups { Id = 6, Name = "Test6" });
+		_repository.Add(new Group { Id = 6, Name = "Test6" });
 
 		// Act
 		var entity = _repository.GetById(6);
@@ -95,7 +95,7 @@ public class BaseEntityRepositoryTests
 	public void GetById_ReturnsNullForNonexistentId()
 	{
 		// Arrange
-		_repository.Add(new Groups { Id = 7, Name = "Test7" });
+		_repository.Add(new Group { Id = 7, Name = "Test7" });
 
 		// Act
 		var nonExistentEntity = _repository.GetById(8);

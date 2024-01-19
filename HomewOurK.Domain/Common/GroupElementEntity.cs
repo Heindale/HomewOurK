@@ -16,6 +16,6 @@ namespace HomewOurK.Domain.Common
 		[Required]
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int GroupId { get; set; }
-		public Groups? Group { get; set; }
+		public Group? Group { get; set; }
 	}
 }

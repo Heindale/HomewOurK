@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace HomewOurK.Domain.Entities
 {
     [Index(nameof(Email), nameof(Username), IsUnique = true)]
-	public class Users : BaseEntity
+	public class User : BaseEntity
 	{
         [Required]
         [EmailAddress]
@@ -28,7 +28,7 @@ namespace HomewOurK.Domain.Entities
 
         public DateOnly RegistrationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
-        public List<Groups> Groups { get; set; } = new List<Groups>();
+        public List<Group> Groups { get; set; } = new List<Group>();
         public List<GroupsUsers> GroupsUsers { get; set; } = new List<GroupsUsers>();
     }
 }

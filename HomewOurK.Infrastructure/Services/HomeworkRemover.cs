@@ -7,9 +7,9 @@ namespace HomewOurK.Infrastructure.Services
 {
 	public class HomeworkRemover : IHomeworkRemover
 	{
-		private readonly SubjectElementRepository<Homeworks> _homeworkRepository;
+		private readonly SubjectElementRepository<Homework> _homeworkRepository;
 
-		public HomeworkRemover(SubjectElementRepository<Homeworks> homeworkRepository)
+		public HomeworkRemover(SubjectElementRepository<Homework> homeworkRepository)
 		{
 			_homeworkRepository = homeworkRepository;
 		}
@@ -19,12 +19,12 @@ namespace HomewOurK.Infrastructure.Services
 			TimeSpan timeOfDeletion = TimeSpan.FromDays(60);
 			DateTime today = DateTime.Now;
 
-			List<Homeworks> homeworks = _homeworkRepository
+			List<Homework> homeworks = _homeworkRepository
 				.GetAll()
 				.Where(x => x.Done == true)
 				.ToList();
 
-			foreach (Homeworks homework in homeworks)
+			foreach (Homework homework in homeworks)
 			{
 				if (today.CompareTo(homework.CompletedDate + timeOfDeletion) < 0)
 				{

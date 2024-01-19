@@ -21,12 +21,12 @@ namespace HomewOurKConsole
 			var Services = new ServiceCollection()
 				.AddTransient<IHomeworkService, HomeworkService>()
 				.AddTransient<ITeacherService, TeacherService>()
-				.AddTransient<IBaseEntityRepository<Groups>, BaseEntityRepository<Groups>>()
-				.AddTransient<IGroupElementRepository<Subjects>, GroupElementRepository<Subjects>>()
-				.AddTransient<IGroupElementRepository<Teachers>, GroupElementRepository<Teachers>>()
-				.AddTransient<IGroupElementRepository<Attachments>, GroupElementRepository<Attachments>>()
+				.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>()
+				.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>()
+				.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>()
+				.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>()
 				.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>()
-				.AddTransient<ISubjectElementRepository<Homeworks>, SubjectElementRepository<Homeworks>>()
+				.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>()
 				.AddDbContext<ApplicationContext>(options =>
 				{
 					options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin");
@@ -36,11 +36,11 @@ namespace HomewOurKConsole
 			using var serviceProvider = Services.BuildServiceProvider();
 
 			var _context = new ApplicationContext();
-			var homeworksRepository = new SubjectElementRepository<Homeworks>(_context);
+			var homeworksRepository = new SubjectElementRepository<Homework>(_context);
 			var homeworkService = new HomeworkService(homeworksRepository);
-			List<Homeworks> homeworks = homeworkService.GetHomeworksByGroupId(1);
+			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1);
 
-			homeworkService.CreateNewHomework(new Homeworks
+			homeworkService.CreateNewHomework(new Homework
 			{
 				Deadline = DateTime.UtcNow + TimeSpan.FromDays(2),
 				Description = "Сделать домашку",
@@ -51,8 +51,8 @@ namespace HomewOurKConsole
 
 			Display.PrintHomeworks(homeworks);
 
-			var teacherRepository = new GroupElementRepository<Teachers>(_context);
-			var subjectRepository = new GroupElementRepository<Subjects>(_context);
+			var teacherRepository = new GroupElementRepository<Teacher>(_context);
+			var subjectRepository = new GroupElementRepository<Subject>(_context);
 			var teacherService = new TeacherService(teacherRepository);
 			teacherService.AddSubject(teacherService.GetTeacherById(2, 1), subjectRepository.GetById(1, 1));
 
@@ -64,7 +64,7 @@ namespace HomewOurKConsole
 
 	public static class Display
 	{
-		public static void PrintHomeworks(List<Homeworks> homeworks)
+		public static void PrintHomeworks(List<Homework> homeworks)
 		{
 			foreach (var item in homeworks)
 			{

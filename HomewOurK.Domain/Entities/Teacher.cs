@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomewOurK.Domain.Entities
 {
-	public class Teachers : GroupElementEntity
+	public class Teacher : GroupElementEntity
 	{
 		[Required]
 		[StringLength(100)]
 		public string FullName { get; set; } = "";
 
-		public List<Subjects> Subjects { get; set; } = new List<Subjects>();
+		public List<Subject> Subjects { get; set; } = new List<Subject>();
     }
 }

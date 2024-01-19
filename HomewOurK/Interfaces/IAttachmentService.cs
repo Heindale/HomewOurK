@@ -4,10 +4,10 @@ namespace HomewOurK.Application.Interfaces
 {
 	public interface IAttachmentService
 	{
-		List<Attachments> GetAttachmentsByGroupId(int groupId);
-		Attachments GetAttachmentById(int attachmentId, int groupId);
-		void CreateNewAttachment(Attachments attachment);
-		void UpdateAttachment(Attachments attachment);
+		List<Attachment> GetAttachmentsByGroupId(int groupId);
+		Attachment GetAttachmentById(int attachmentId, int groupId);
+		void CreateNewAttachment(Attachment attachment);
+		void UpdateAttachment(Attachment attachment);
 		void DeleteAttachmentById(int attachmentId);
 	}
 }

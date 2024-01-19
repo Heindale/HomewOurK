@@ -3,7 +3,7 @@ using HomewOurK.Domain.Common;
 
 namespace HomewOurK.Domain.Entities
 {
-	public class Homeworks : SubjectElementEntity
+	public class Homework : SubjectElementEntity
 	{
 		[Required]
 		[StringLength(100)]

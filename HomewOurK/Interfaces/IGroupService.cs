@@ -4,10 +4,10 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 {
 	public interface IGroupService
 	{
-		Groups GetGroupById(int groupId);
-		List<Groups> GetGroupsByUserId(int userId);
-		void UpdateGroup(Groups group);
-		void CreateNewGroup(Groups group);
+		Group GetGroupById(int groupId);
+		List<Group> GetGroupsByUserId(int userId);
+		void UpdateGroup(Group group);
+		void CreateNewGroup(Group group);
 		void DeleteGroupById(int groupId);
 
 		void InviteUser(int groupId, int userId);

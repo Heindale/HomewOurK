@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace HomewOurK.Domain.Entities
 {
-	public class Attachments : GroupElementEntity
+	public class Attachment : GroupElementEntity
 	{
 		[MaxLength(100)]
 		public string Name { get; set; } = "";
@@ -11,6 +11,6 @@ namespace HomewOurK.Domain.Entities
 		public string Link { get; set; } = "";
 
 		public int SubjectId { get; set; }
-		public Subjects? Subject { get; set; }
+		public Subject? Subject { get; set; }
 	}
 }

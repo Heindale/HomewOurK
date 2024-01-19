@@ -6,10 +6,10 @@ namespace HomewOurK.Domain.Entities
 	public class GroupsUsers
 	{
 		public int GroupId { get; set; }
-		public Groups? Group { get; set; }
+		public Group? Group { get; set; }
 
 		public int UserId { get; set; }
-		public Users? User { get; set; }
+		public User? User { get; set; }
 
 		public int UserLevel { get; set; }
 

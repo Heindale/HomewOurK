@@ -6,17 +6,17 @@ namespace HomewOurK.Infrastructure.Services
 {
 	public class GroupService : IGroupService
 	{
-		private readonly IBaseEntityRepository<Groups> _groupsRepository;
+		private readonly IBaseEntityRepository<Group> _groupsRepository;
 
 		private readonly IGroupsUsersRepository _groupsUsersRepository;
 
-		public GroupService(IBaseEntityRepository<Groups> groupsRepository, IGroupsUsersRepository groupsUsersRepository)
+		public GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository)
 		{
 			_groupsRepository = groupsRepository;
 			_groupsUsersRepository = groupsUsersRepository;
 		}
 
-		public void CreateNewGroup(Groups group)
+		public void CreateNewGroup(Group group)
 		{
 			_groupsRepository.Add(group);
 		}
@@ -31,15 +31,15 @@ namespace HomewOurK.Infrastructure.Services
 			_groupsUsersRepository.DeleteById(groupId, userId);
 		}
 
-		public Groups GetGroupById(int groupId)
+		public Group GetGroupById(int groupId)
 		{
 			return _groupsRepository.GetById(groupId);
 		}
 
-		public List<Groups> GetGroupsByUserId(int userId)
+		public List<Group> GetGroupsByUserId(int userId)
 		{
 			var groupsUsers = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).ToList();
-			List<Groups> groups = new List<Groups>();
+			List<Group> groups = new List<Group>();
 			for (int i = 0; i < groupsUsers.Count; i++)
 			{
 				groups.Add(_groupsRepository.GetById(groupsUsers[i].GroupId));
@@ -52,7 +52,7 @@ namespace HomewOurK.Infrastructure.Services
 			_groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
 		}
 
-		public void UpdateGroup(Groups group)
+		public void UpdateGroup(Group group)
 		{
 			_groupsRepository.Update(group);
 		}
