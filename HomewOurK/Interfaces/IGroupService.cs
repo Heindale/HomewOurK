@@ -5,12 +5,14 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 	public interface IGroupService
 	{
 		Group GetGroupById(int groupId);
-		List<Group> GetGroupsByUserId(int userId);
-		void UpdateGroup(Group group);
-		void CreateNewGroup(Group group);
-		void DeleteGroupById(int groupId);
+		IEnumerable<Group> GetGroupsByUserId(int userId);
+		bool UpdateGroup(Group group);
+		bool CreateNewGroup(Group group);
+		bool DeleteGroup(Group group);
 
-		void InviteUser(int groupId, int userId);
-		void ExcludeUser(int groupId, int userId);
+		bool AddUserToGroup(Group group, User user);
+		bool AddUserToGroup(int groupId, int userId);
+		bool DeleteUserFromGroup(Group group, User user);
+		bool DeleteUserFromGroup(int groupId, int userId);
 	}
 }
