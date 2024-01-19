@@ -23,7 +23,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public void DeleteGroupById(int groupId)
 		{
-			_groupsRepository.DeleteById(groupId);
+			_groupsRepository.Delete(groupId);
 		}
 
 		public void ExcludeUser(int groupId, int userId)

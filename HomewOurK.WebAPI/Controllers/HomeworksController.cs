@@ -19,7 +19,7 @@ namespace HomewOurK.WebAPI.Controllers
 			return _homeworkService.GetHomeworksByGroupId(id);
 		}
 		[HttpGet]
-		public Homeworks GetHomework(int id, int subjectId, int groupId) 
+		public Homeworks GetHomework(int id, int subjectId, int groupId)
 		{
 			return _homeworkService.GetHomeworkById(id, subjectId, groupId);
 		}

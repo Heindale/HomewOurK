@@ -40,7 +40,7 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Update(teacher);
 		}
 
-		public void DeleteTeacherById(int teacherId, int groupId)
+		public void Delete(int teacherId, int groupId)
 		{
 			_teacherRepository.DeleteById(teacherId, groupId);
 		}

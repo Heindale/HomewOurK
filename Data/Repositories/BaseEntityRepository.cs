@@ -1,9 +1,17 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Persistence.Contexts;
 using HomewOurK.Domain.Common;
+using System.Collections.Generic;
+using HomewOurK.Application.Interfaces;
 
 namespace HomewOurK.Persistence.Repositories
 {
+	// добавить обработчики ошибок
+	// удаление объекта целиком
+	// as Entity
+	// возвращать null
+	// IQueryable вместо списка(List)
+	// IEnumerable<Entity> вместо конкретной коллекции List<Entity>
 	public class BaseEntityRepository<Entity> : IBaseEntityRepository<Entity> where Entity : BaseEntity
 	{
 		private readonly ApplicationContext _context;
@@ -21,7 +29,7 @@ namespace HomewOurK.Persistence.Repositories
 			_context.SaveChanges();
 		}
 
-		public void DeleteById(int Id)
+		public void Delete(int Id)
 		{
 			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == Id);
 			if (dbEntity == null)
