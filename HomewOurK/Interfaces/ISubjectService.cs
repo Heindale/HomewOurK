@@ -5,13 +5,17 @@ namespace HomewOurK.Application.Interfaces
 	public interface ISubjectService
 	{
 		Subject GetSubjectById(int subjectId, int groupId);
-		List<Subject> GetSubjectsByGroupId(int groupId);
-		void AddSubject(Subject subject);
-		void UpdateSubject(Subject subject);
-		void DeleteSubjectById(int subjectId, int groupId);
+		IEnumerable<Subject> GetSubjectsByGroupId(int groupId);
+		bool AddSubject(Subject subject);
+		bool UpdateSubject(Subject subject);
+		bool DeleteSubject(Subject subject);
 
-		void AddTeacher(int subjectId, int teacherId);
-		void DeleteTeacher(int subjectId, int teacherId);
-		List<Teacher> GetTeacherBySubjectId(int subjectId, int groupId);
+		bool AddTeacher(Subject subject, Teacher teacher);
+		bool AddTeacher(int subjectId, int teacherId);
+		bool DeleteTeacher(Subject subject, Teacher teacher);
+		bool DeleteTeacher(int subjectId, int teacherId);
+
+		IEnumerable<Teacher> GetTeachersBySubjectId(int subjectId, int groupId);
+		IEnumerable<Teacher> GetTeachersFromSubject(int subjectId, int groupId);
 	}
 }

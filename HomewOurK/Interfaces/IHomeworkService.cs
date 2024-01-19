@@ -4,12 +4,12 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 {
 	public interface IHomeworkService
 	{
-		List<Homework> GetHomeworksByGroupId(int groupId);
-		List<Homework> GetHomeworksBySubjectId(int groupId);
-		Homework GetHomeworkById(int subjectId, int groupId);
-		void UpdateHomework(Homework homework);
-		void CreateNewHomework(Homework homework);
-		void CompleteHomeworkById(int homeworkId, int subjectId, int groupId);
-		void DeleteHomeworkById(int homeworkId, int subjectId, int groupId);
+		IEnumerable<Homework> GetHomeworksByGroupId(int groupId);
+		IEnumerable<Homework> GetHomeworksBySubjectId(int subjectId, int groupId);
+		Homework GetHomeworkById(int homeworkId, int subjectId, int groupId);
+		bool UpdateHomework(Homework homework);
+		bool CreateNewHomework(Homework homework);
+		bool CompleteHomework(Homework homework);
+		bool DeleteHomework(Homework homework);
 	}
 }
