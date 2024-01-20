@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
+using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Persistence.Contexts;
 
 namespace HomewOurK.Persistence.Repositories
@@ -15,56 +16,74 @@ namespace HomewOurK.Persistence.Repositories
 
 		public IQueryable<Entity> Entities => _context.Set<Entity>();
 
-		public void Add(Entity entity)
+		public bool Add(Entity entity)
 		{
-			var lastEntity = _context.Set<Entity>()
-				.Where(x => x.GroupId == entity.GroupId && x.SubjectId == entity.SubjectId)
-				.OrderBy(x => x.Id)
-				.LastOrDefault();
-
-			if (lastEntity == null)
+			try
 			{
-				entity.Id = 0;
+				var lastEntity = _context.Set<Entity>()
+						.Where(x => x.GroupId == entity.GroupId && x.SubjectId == entity.SubjectId)
+						.OrderBy(x => x.Id)
+						.LastOrDefault();
+
+				if (lastEntity == null)
+				{
+					entity.Id = 0;
+				}
+				else
+				{
+					entity.Id = lastEntity.Id + 1;
+				}
+
+				_context.Set<Entity>().Add(entity);
+				_context.SaveChanges();
+
+				return true;
 			}
-			else
+			catch (Exception ex)
 			{
-				entity.Id = lastEntity.Id + 1;
+				return false;
 			}
-
-			_context.Set<Entity>().Add(entity);
-			_context.SaveChanges();
 		}
 
-		public void DeleteById(int id, int subjectId, int groupId)
+		public bool Delete(Entity entity)
 		{
-			var dbEntity = _context.Set<Entity>()
-				.FirstOrDefault(x => x.Id == id && x.GroupId == groupId && x.SubjectId == subjectId);
-			if (dbEntity == null)
-				return;
-			_context.Remove(dbEntity);
-			_context.SaveChanges();
+			try
+			{
+				if (_context.Set<Entity>().Find(entity) == null)
+					return false;
+
+				_context.Set<Entity>().Remove(entity);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public void Update(Entity entity)
+		public bool Update(Entity entity)
 		{
-			var dbEntity = _context.Set<Entity>()
-				.FirstOrDefault(x => x.Id == entity.Id && x.GroupId == entity.GroupId && x.SubjectId == entity.SubjectId);
-			if (dbEntity == null)
-				return;
-			_context.Set<Entity>().Update(entity);
-			_context.SaveChanges();
+			try
+			{
+				_context.Set<Entity>().Update(entity);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public List<Entity> GetAll()
+		public IEnumerable<Entity> GetAll()
 		{
-			return _context.Set<Entity>().ToList();
+			return _context.Set<Entity>();
 		}
 
-		public Entity GetById(int id, int subjectId, int groupId)
+		public Entity? GetById(int id, int subjectId, int groupId)
 		{
-			return (Entity)(_context.Set<Entity>().FirstOrDefault(x => x.Id == id
-			&& x.SubjectId == subjectId && x.GroupId == groupId)
-				?? new SubjectElementEntity());
+			return (_context.Set<Entity>().Find(id, subjectId, groupId));
 		}
 	}
 }
