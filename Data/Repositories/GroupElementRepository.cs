@@ -1,16 +1,19 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Common;
 using HomewOurK.Persistence.Contexts;
+using Microsoft.Extensions.Logging;
 
 namespace HomewOurK.Persistence.Repositories
 {
 	public class GroupElementRepository<Entity> : IGroupElementRepository<Entity> where Entity : GroupElementEntity
 	{
 		private readonly ApplicationContext _context;
+		private ILogger _logger;
 
-		public GroupElementRepository(ApplicationContext context)
+		public GroupElementRepository(ApplicationContext context, ILogger logger)
 		{
 			_context = context;
+			_logger = logger;
 		}
 
 		public IQueryable<Entity> Entities => _context.Set<Entity>();
@@ -36,6 +39,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be added!");
 				return false;
 			}		
 		}
@@ -53,6 +57,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be deleted!");
 				return false;
 			}
 		}
@@ -67,6 +72,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be updated!");
 				return false;
 			}
 		}

@@ -1,16 +1,19 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
+using Microsoft.Extensions.Logging;
 
 namespace HomewOurK.Persistence.Repositories
 {
 	public class GroupsUsersRepository : IGroupsUsersRepository
 	{
 		private readonly ApplicationContext _context;
+		private ILogger _logger;
 
-		public GroupsUsersRepository(ApplicationContext context) 
+		public GroupsUsersRepository(ApplicationContext context, ILogger logger) 
 		{
 			_context = context;
+			_logger = logger;
 		}
 
 		public IQueryable<GroupsUsers> Entities => _context.GroupsUsers;
@@ -25,6 +28,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be added!");
 				return false;
 			}
 		}
@@ -41,6 +45,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be deleted!");
 				return false;
 			}
 		}
@@ -57,6 +62,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be updated!");
 				return false;
 			}
 		}

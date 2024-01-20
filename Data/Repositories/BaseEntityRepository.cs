@@ -1,22 +1,19 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Persistence.Contexts;
 using HomewOurK.Domain.Common;
+using Microsoft.Extensions.Logging;
 
 namespace HomewOurK.Persistence.Repositories
 {
-	// добавить обработчики ошибок
-	// удаление объекта целиком
-	// as Entity
-	// возвращать null
-	// IQueryable вместо списка(List)
-	// IEnumerable<Entity> вместо конкретной коллекции List<Entity>
 	public class BaseEntityRepository<Entity> : IBaseEntityRepository<Entity> where Entity : BaseEntity
 	{
 		private readonly ApplicationContext _context;
+		private ILogger _logger;
 
-        public BaseEntityRepository(ApplicationContext context)
+        public BaseEntityRepository(ApplicationContext context, ILogger logger)
         {
             _context = context;
+			_logger = logger;
         }
 
         public IQueryable<Entity> Entities => _context.Set<Entity>();
@@ -29,8 +26,9 @@ namespace HomewOurK.Persistence.Repositories
 				_context.SaveChanges();
 				return true;
 			}
-			catch (Exception ex) 
+			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be added!");
 				return false;
 			}
 		}
@@ -48,6 +46,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be deleted!");
 				return false;
 			}
 		}
@@ -62,6 +61,7 @@ namespace HomewOurK.Persistence.Repositories
 			}
 			catch (Exception ex)
 			{
+				_logger.LogInformation(ex, "The element could not be updated!");
 				return false;
 			}
 		}
