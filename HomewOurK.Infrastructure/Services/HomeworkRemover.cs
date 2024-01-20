@@ -1,6 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Domain.Entities;
-using HomewOurK.Persistence.Contexts;
 using HomewOurK.Persistence.Repositories;
 
 namespace HomewOurK.Infrastructure.Services
@@ -28,7 +27,7 @@ namespace HomewOurK.Infrastructure.Services
 			{
 				if (today.CompareTo(homework.CompletedDate + timeOfDeletion) < 0)
 				{
-					_homeworkRepository.Delete(homework);
+					_homeworkRepository.DeleteById(homework.Id, homework.SubjectId, homework.GroupId);
 				}
 			}
 		}
