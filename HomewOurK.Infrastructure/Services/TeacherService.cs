@@ -7,7 +7,6 @@ namespace HomewOurK.Infrastructure.Services
     public class TeacherService : ITeacherService
 	{
 		private readonly IGroupElementRepository<Teacher> _teacherRepository;
-
 		private readonly IGroupElementRepository<Subject> _subjectsRepository;
 
         public TeacherService(IGroupElementRepository<Teacher> teacherRepository, 
@@ -17,52 +16,91 @@ namespace HomewOurK.Infrastructure.Services
 			_subjectsRepository = subjectRepository;
         }
 
-		public void AddSubject(int teacherId, int groupId, int subjectId)
+		public bool AddSubject(int teacherId, int groupId, int subjectId)
 		{
 			var teacher = _teacherRepository.GetById(teacherId, groupId);
-			if (teacher == null)
-				return;
-			teacher.Subjects.Add(_subjectsRepository.GetById(subjectId, groupId));
-			_teacherRepository.Update(teacher);
+			var subject = _subjectsRepository.GetById(subjectId, groupId);
+
+			if (teacher != null && subject != null)
+			{
+				teacher.Subjects.Add(subject);
+				return _teacherRepository.Update(teacher);
+			}
+			return false;
 		}
 
-		public void AddTeacher(Teacher teacher)
+		public bool AddSubject(Teacher teacher, Subject subject)
 		{
-			_teacherRepository.Add(teacher);
+			if (teacher != null && subject != null)
+			{
+				teacher.Subjects.Add(subject);
+				return _teacherRepository.Update(teacher);
+			}	
+			return false;
 		}
 
-		public void DeleteSubjectById(int teacherId, int groupId, int subjectId)
+		public bool AddTeacher(Teacher teacher)
+		{
+			return _teacherRepository.Add(teacher);
+		}
+
+		public bool DeleteSubject(int teacherId, int groupId, int subjectId)
 		{
 			var teacher = _teacherRepository.GetById(teacherId, groupId);
-			if (teacher == null)
-				return;
-			teacher.Subjects.Remove(_subjectsRepository.GetById(subjectId, groupId));
-			_teacherRepository.Update(teacher);
+			var subject = _subjectsRepository.GetById(subjectId, groupId);
+
+			if (teacher != null && subject != null)
+			{
+				teacher.Subjects.Remove(subject);
+				return _teacherRepository.Update(teacher);
+			}
+			return false;
 		}
 
-		public void Delete(int teacherId, int groupId)
+		public bool DeleteSubject(Teacher teacher, Subject subject)
 		{
-			_teacherRepository.DeleteById(teacherId, groupId);
+			if (teacher != null && subject != null)
+			{
+				teacher.Subjects.Remove(subject);
+				return _teacherRepository.Update(teacher);
+			}
+			return false;
 		}
 
-		public List<Subject> GetSubjectsByTeacherId(int teacherId, int groupId)
+		public bool DeleteTeacher(Teacher teacher)
 		{
-			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+			return _teacherRepository.Delete(teacher);
 		}
 
-		public Teacher GetTeacherById(int teacherId, int groupId)
+		public IEnumerable<Subject>? GetSubjectsFromTeacher(Teacher teacher)
+		{
+			return _teacherRepository.Entities
+				.Where(x => x.Id == teacher.Id && x.GroupId == teacher.GroupId)
+				.Select(x => x.Subjects)
+				.FirstOrDefault();
+		}
+
+		public IEnumerable<Subject>? GetSubjectsByTeacherId(int teacherId, int groupId)
+		{
+			return _teacherRepository.Entities
+				.Where(x => x.Id == teacherId && x.GroupId == groupId)
+				.Select(x => x.Subjects)
+				.FirstOrDefault();
+		}
+
+		public Teacher? GetTeacherById(int teacherId, int groupId)
 		{
 			return _teacherRepository.GetById(teacherId, groupId);
 		}
 
-		public List<Teacher> GetTeachersByGroupId(int groupId)
+		public IEnumerable<Teacher> GetTeachersByGroupId(int groupId)
 		{
 			return _teacherRepository.Entities.Where(x => x.GroupId == groupId).ToList();
 		}
 
-		public void UpdateTeacher(Teacher teacher)
+		public bool UpdateTeacher(Teacher teacher)
 		{
-			_teacherRepository.Update(teacher);
+			return _teacherRepository.Update(teacher);
 		}
 	}
 }

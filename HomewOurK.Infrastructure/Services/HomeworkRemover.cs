@@ -27,7 +27,7 @@ namespace HomewOurK.Infrastructure.Services
 			{
 				if (today.CompareTo(homework.CompletedDate + timeOfDeletion) < 0)
 				{
-					_homeworkRepository.DeleteById(homework.Id, homework.SubjectId, homework.GroupId);
+					_homeworkRepository.Delete(homework);
 				}
 			}
 		}

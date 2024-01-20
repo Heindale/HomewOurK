@@ -38,7 +38,7 @@ namespace HomewOurKConsole
 			var _context = new ApplicationContext();
 			var homeworksRepository = new SubjectElementRepository<Homework>(_context);
 			var homeworkService = new HomeworkService(homeworksRepository);
-			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1);
+			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1).ToList();
 
 			homeworkService.CreateNewHomework(new Homework
 			{
