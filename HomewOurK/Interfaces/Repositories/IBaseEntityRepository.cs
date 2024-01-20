@@ -4,6 +4,6 @@ namespace HomewOurK.Application.Interfaces.Repositories
 {
 	public interface IBaseEntityRepository<Entity> : IGenericRepository<Entity> where Entity : BaseEntity
 	{
-		Entity GetById(int id);
+		Entity? GetById(int id);
 	}
 }

@@ -4,6 +4,6 @@ namespace HomewOurK.Application.Interfaces.Repositories
 {
 	public interface IGroupsUsersRepository : IGenericRepository<GroupsUsers> 
 	{
-		GroupsUsers GetById(int groupId, int userId);
+		GroupsUsers? GetById(int groupId, int userId);
 	}
 }

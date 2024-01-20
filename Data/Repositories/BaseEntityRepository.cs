@@ -1,8 +1,6 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Persistence.Contexts;
 using HomewOurK.Domain.Common;
-using System.Collections.Generic;
-using HomewOurK.Application.Interfaces;
 
 namespace HomewOurK.Persistence.Repositories
 {
@@ -23,39 +21,56 @@ namespace HomewOurK.Persistence.Repositories
 
         public IQueryable<Entity> Entities => _context.Set<Entity>();
 
-		public void Add(Entity entity)
+		public bool Add(Entity entity)
 		{
-			_context.Set<Entity>().Add(entity);
-			_context.SaveChanges();
+			try
+			{
+				_context.Set<Entity>().Add(entity);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex) 
+			{
+				return false;
+			}
 		}
 
-		public void Delete(int Id)
+		public bool Delete(Entity entity)
 		{
-			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == Id);
-			if (dbEntity == null)
-				return;
-			_context.Set<Entity>().Remove(dbEntity);
-			_context.SaveChanges();
+			try
+			{
+				_context.Set<Entity>().Remove(entity);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 		
-		public void Update(Entity entity)
+		public bool Update(Entity entity)
 		{
-			var dbEntity = _context.Set<Entity>().FirstOrDefault(x => x.Id == entity.Id);
-			if (dbEntity == null)
-				return;
-			_context.Set<Entity>().Update(entity);
-			_context.SaveChanges();
+			try
+			{
+				_context.Set<Entity>().Update(entity);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public List<Entity> GetAll()
+		public IEnumerable<Entity> GetAll()
 		{
-			return _context.Set<Entity>().ToList();
+			return _context.Set<Entity>();
 		}
 
-		public Entity GetById(int id)
+		public Entity? GetById(int id)
 		{
-			return (Entity)(_context.Set<Entity>().FirstOrDefault(x => x.Id == id) 
-				?? new BaseEntity());
+			return _context.Set<Entity>().Find(id);
 		}
 	}
 }

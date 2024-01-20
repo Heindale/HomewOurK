@@ -4,7 +4,7 @@
 	{
 		IQueryable<T> Entities { get; }
 
-		List<T> GetAll();
+		IEnumerable<T> GetAll();
 		bool Add(T entity);
 		bool Update(T entity);
 		bool Delete(T entity);
