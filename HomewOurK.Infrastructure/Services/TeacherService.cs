@@ -7,7 +7,6 @@ namespace HomewOurK.Infrastructure.Services
     public class TeacherService : ITeacherService
 	{
 		private readonly IGroupElementRepository<Teacher> _teacherRepository;
-
 		private readonly IGroupElementRepository<Subject> _subjectsRepository;
 
         public TeacherService(IGroupElementRepository<Teacher> teacherRepository, 
@@ -17,7 +16,7 @@ namespace HomewOurK.Infrastructure.Services
 			_subjectsRepository = subjectRepository;
         }
 
-		public void AddSubject(int teacherId, int groupId, int subjectId)
+		public bool AddSubject(int teacherId, int groupId, int subjectId)
 		{
 			var teacher = _teacherRepository.GetById(teacherId, groupId);
 			if (teacher == null)
@@ -26,12 +25,17 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Update(teacher);
 		}
 
-		public void AddTeacher(Teacher teacher)
+		public bool AddSubject(Teacher teacher, Subject subject)
 		{
-			_teacherRepository.Add(teacher);
+			
 		}
 
-		public void DeleteSubjectById(int teacherId, int groupId, int subjectId)
+		public bool AddTeacher(Teacher teacher)
+		{
+			return _teacherRepository.Add(teacher);
+		}
+
+		public bool DeleteSubject(int teacherId, int groupId, int subjectId)
 		{
 			var teacher = _teacherRepository.GetById(teacherId, groupId);
 			if (teacher == null)
@@ -40,14 +44,28 @@ namespace HomewOurK.Infrastructure.Services
 			_teacherRepository.Update(teacher);
 		}
 
-		public void Delete(int teacherId, int groupId)
+		public bool DeleteSubject(Teacher teacher, Subject subject)
 		{
-			_teacherRepository.DeleteById(teacherId, groupId);
+			var teacher = _teacherRepository.GetById(teacherId, groupId);
+			if (teacher == null)
+				return;
+			teacher.Subjects.Remove(_subjectsRepository.GetById(subjectId, groupId));
+			_teacherRepository.Update(teacher);
+		}
+
+		public bool DeleteTeacher(Teacher teacher)
+		{
+			return _teacherRepository.Delete(teacher);
 		}
 
 		public List<Subject> GetSubjectsByTeacherId(int teacherId, int groupId)
 		{
 			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+		}
+
+		public IEnumerable<Subject> GetSubjectsFromTeacher(Teacher teacher)
+		{
+
 		}
 
 		public Teacher GetTeacherById(int teacherId, int groupId)
@@ -60,9 +78,19 @@ namespace HomewOurK.Infrastructure.Services
 			return _teacherRepository.Entities.Where(x => x.GroupId == groupId).ToList();
 		}
 
-		public void UpdateTeacher(Teacher teacher)
+		public bool UpdateTeacher(Teacher teacher)
 		{
-			_teacherRepository.Update(teacher);
+			return _teacherRepository.Update(teacher);
+		}
+
+		IEnumerable<Subject> ITeacherService.GetSubjectsByTeacherId(int teacherId, int groupId)
+		{
+
+		}
+
+		IEnumerable<Teacher> ITeacherService.GetTeachersByGroupId(int groupId)
+		{
+
 		}
 	}
 }
