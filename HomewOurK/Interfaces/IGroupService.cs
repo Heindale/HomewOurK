@@ -4,7 +4,7 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 {
 	public interface IGroupService
 	{
-		Group GetGroupById(int groupId);
+		Group? GetGroupById(int groupId);
 		IEnumerable<Group> GetGroupsByUserId(int userId);
 		bool UpdateGroup(Group group);
 		bool CreateNewGroup(Group group);

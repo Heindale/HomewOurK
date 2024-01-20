@@ -53,8 +53,7 @@ namespace HomewOurKConsole
 
 			var teacherRepository = new GroupElementRepository<Teacher>(_context);
 			var subjectRepository = new GroupElementRepository<Subject>(_context);
-			var teacherService = new TeacherService(teacherRepository);
-			teacherService.AddSubject(teacherService.GetTeacherById(2, 1), subjectRepository.GetById(1, 1));
+			var teacherService = new TeacherService(teacherRepository, subjectRepository);
 
 			Console.WriteLine("Объекты сохранены");
 

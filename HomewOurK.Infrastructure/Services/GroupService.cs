@@ -7,7 +7,6 @@ namespace HomewOurK.Infrastructure.Services
 	public class GroupService : IGroupService
 	{
 		private readonly IBaseEntityRepository<Group> _groupsRepository;
-
 		private readonly IGroupsUsersRepository _groupsUsersRepository;
 
 		public GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository)
@@ -16,45 +15,73 @@ namespace HomewOurK.Infrastructure.Services
 			_groupsUsersRepository = groupsUsersRepository;
 		}
 
-		public void CreateNewGroup(Group group)
+		public bool AddUserToGroup(Group group, User user)
 		{
-			_groupsRepository.Add(group);
+			var groupsUsers = new GroupsUsers
+			{
+				Group = group,
+				GroupId = group.Id,
+				User = user,
+				UserId = user.Id
+			};
+
+			return _groupsUsersRepository.Add(groupsUsers);
 		}
 
-		public void DeleteGroupById(int groupId)
+		public bool AddUserToGroup(int groupId, int userId)
 		{
-			_groupsRepository.Delete(groupId);
+			return _groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
 		}
 
-		public void ExcludeUser(int groupId, int userId)
+		public bool CreateNewGroup(Group group)
 		{
-			_groupsUsersRepository.DeleteById(groupId, userId);
+			return _groupsRepository.Add(group);
 		}
 
-		public Group GetGroupById(int groupId)
+		public bool DeleteGroup(Group group)
+		{
+			return _groupsRepository.Delete(group);
+		}
+
+		public bool DeleteUserFromGroup(Group group, User user)
+		{
+			var groupsUsers = new GroupsUsers
+			{
+				Group = group,
+				GroupId = group.Id,				
+				User = user,
+				UserId = user.Id
+			};
+
+			return _groupsUsersRepository.Delete(groupsUsers);
+		}
+
+		public bool DeleteUserFromGroup(int groupId, int userId)
+		{
+			return _groupsUsersRepository.Delete(new GroupsUsers { GroupId = groupId, UserId = userId });
+		}
+
+		public Group? GetGroupById(int groupId)
 		{
 			return _groupsRepository.GetById(groupId);
 		}
 
-		public List<Group> GetGroupsByUserId(int userId)
+		public IEnumerable<Group> GetGroupsByUserId(int userId)
 		{
 			var groupsUsers = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).ToList();
 			List<Group> groups = new List<Group>();
 			for (int i = 0; i < groupsUsers.Count; i++)
 			{
-				groups.Add(_groupsRepository.GetById(groupsUsers[i].GroupId));
+				var newGroup = _groupsRepository.GetById(groupsUsers[i].GroupId);
+				if (newGroup is not null)
+					groups.Add(newGroup);
 			}
 			return groups;
 		}
 
-		public void InviteUser(int groupId, int userId)
+		public bool UpdateGroup(Group group)
 		{
-			_groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
-		}
-
-		public void UpdateGroup(Group group)
-		{
-			_groupsRepository.Update(group);
+			return _groupsRepository.Update(group);
 		}
 	}
 }
