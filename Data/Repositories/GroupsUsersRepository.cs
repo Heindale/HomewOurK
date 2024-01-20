@@ -15,41 +15,60 @@ namespace HomewOurK.Persistence.Repositories
 
 		public IQueryable<GroupsUsers> Entities => _context.GroupsUsers;
 
-		public virtual void Add(GroupsUsers groupsUsers)
+		public bool Add(GroupsUsers groupsUsers)
 		{
-			_context.GroupsUsers.Add(groupsUsers);
-			_context.SaveChanges();
+			try
+			{
+				_context.GroupsUsers.Add(groupsUsers);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public virtual void DeleteById(int groupId, int userId)
+		public bool Delete(GroupsUsers groupsUsers)
 		{
-			var dbEntity = _context.GroupsUsers
-				.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId);
-			if (dbEntity == null)
-				return; 
-			_context.GroupsUsers.Remove(dbEntity);
-			_context.SaveChanges();
+			try
+			{
+				if (_context.GroupsUsers.Find(groupsUsers) == null)
+					return false;
+				_context.GroupsUsers.Remove(groupsUsers);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public virtual void Update(GroupsUsers groupsUsers)
+		public bool Update(GroupsUsers groupsUsers)
 		{
-			var dbEntity = _context.GroupsUsers
-				.FirstOrDefault(x => x.UserId == groupsUsers.UserId && x.GroupId == groupsUsers.GroupId);
-			if (dbEntity == null)
-				return;
-			_context.GroupsUsers.Update(groupsUsers);
-			_context.SaveChanges();
+			try
+			{
+				if (_context.GroupsUsers.Find(groupsUsers) == null)
+					return false;
+				_context.GroupsUsers.Update(groupsUsers);
+				_context.SaveChanges();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				return false;
+			}
 		}
 
-		public List<GroupsUsers> GetAll()
+		public IEnumerable<GroupsUsers> GetAll()
 		{
 			return _context.GroupsUsers.ToList();
 		}
 
-		public GroupsUsers GetById(int groupId, int userId)
+		public GroupsUsers? GetById(int groupId, int userId)
 		{
-			return _context.GroupsUsers.FirstOrDefault(x => x.UserId == userId && x.GroupId == groupId)
-				?? new GroupsUsers();
+			return _context.GroupsUsers.Find(groupId, userId);
 		}
 	}
 }
