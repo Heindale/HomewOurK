@@ -6,7 +6,7 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 	{
 		IEnumerable<Homework> GetHomeworksByGroupId(int groupId);
 		IEnumerable<Homework> GetHomeworksBySubjectId(int subjectId, int groupId);
-		Homework GetHomeworkById(int homeworkId, int subjectId, int groupId);
+		Homework? GetHomeworkById(int homeworkId, int subjectId, int groupId);
 		bool UpdateHomework(Homework homework);
 		bool CreateNewHomework(Homework homework);
 		bool CompleteHomework(Homework homework);

@@ -8,44 +8,45 @@ namespace HomewOurK.WebAPI.Services
 	{
 		private readonly ISubjectElementRepository<Homework> _homeworkRepository;
 
-		public HomeworkService(ISubjectElementRepository<Homework> homeworkRepository) 
+		public HomeworkService(ISubjectElementRepository<Homework> homeworkRepository)
 		{
 			_homeworkRepository = homeworkRepository;
 		}
 
 		public bool CompleteHomework(Homework homework)
 		{
-			throw new NotImplementedException();
+			homework.Done = true;
+			return _homeworkRepository.Update(homework);
 		}
 
 		public bool CreateNewHomework(Homework homework)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.Add(homework);
 		}
 
 		public bool DeleteHomework(Homework homework)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.Delete(homework);
 		}
 
-		public Homework GetHomeworkById(int homeworkId, int subjectId, int groupId)
+		public Homework? GetHomeworkById(int homeworkId, int subjectId, int groupId)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.GetById(homeworkId, subjectId, groupId);
 		}
 
 		public IEnumerable<Homework> GetHomeworksByGroupId(int groupId)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.Entities.Where(e => e.GroupId == groupId);
 		}
 
 		public IEnumerable<Homework> GetHomeworksBySubjectId(int subjectId, int groupId)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.Entities.Where(e => e.GroupId == groupId && e.SubjectId == subjectId);
 		}
 
 		public bool UpdateHomework(Homework homework)
 		{
-			throw new NotImplementedException();
+			return _homeworkRepository.Update(homework);
 		}
 	}
 }
