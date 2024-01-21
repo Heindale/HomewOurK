@@ -57,6 +57,8 @@ namespace HomewOurKConsole
 			var subjectRepository = serviceProvider.GetRequiredService <IGroupElementRepository<Subject>>();
 			var teacherService = new TeacherService(teacherRepository, subjectRepository);
 
+			teacherService.AddTeacher(null);
+
 			Console.WriteLine("Объекты сохранены");
 
 			Console.ReadLine();
