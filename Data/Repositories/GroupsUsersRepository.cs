@@ -8,9 +8,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class GroupsUsersRepository : IGroupsUsersRepository
 	{
 		private readonly ApplicationContext _context;
-		private ILogger _logger;
+		private ILogger<GroupsUsersRepository> _logger;
 
-		public GroupsUsersRepository(ApplicationContext context, ILogger logger) 
+		public GroupsUsersRepository(ApplicationContext context, ILogger<GroupsUsersRepository> logger) 
 		{
 			_context = context;
 			_logger = logger;

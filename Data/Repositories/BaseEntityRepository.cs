@@ -8,9 +8,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class BaseEntityRepository<Entity> : IBaseEntityRepository<Entity> where Entity : BaseEntity
 	{
 		private readonly ApplicationContext _context;
-		private ILogger _logger;
+		private ILogger<BaseEntityRepository<Entity>> _logger;
 
-        public BaseEntityRepository(ApplicationContext context, ILogger logger)
+        public BaseEntityRepository(ApplicationContext context, ILogger<BaseEntityRepository<Entity>> logger)
         {
             _context = context;
 			_logger = logger;

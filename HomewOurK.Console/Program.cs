@@ -8,6 +8,7 @@ using HomewOurK.WebAPI.Services;
 using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace HomewOurKConsole
 {
@@ -27,6 +28,7 @@ namespace HomewOurKConsole
 				.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>()
 				.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>()
 				.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>()
+				.AddLogging()
 				.AddDbContext<ApplicationContext>(options =>
 				{
 					options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin");
@@ -36,7 +38,7 @@ namespace HomewOurKConsole
 			using var serviceProvider = Services.BuildServiceProvider();
 
 			var _context = new ApplicationContext();
-			var homeworksRepository = new SubjectElementRepository<Homework>(_context);
+			var homeworksRepository = serviceProvider.GetRequiredService<ISubjectElementRepository<Homework>>();
 			var homeworkService = new HomeworkService(homeworksRepository);
 			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1).ToList();
 
@@ -51,8 +53,8 @@ namespace HomewOurKConsole
 
 			Display.PrintHomeworks(homeworks);
 
-			var teacherRepository = new GroupElementRepository<Teacher>(_context);
-			var subjectRepository = new GroupElementRepository<Subject>(_context);
+			var teacherRepository = serviceProvider.GetRequiredService <IGroupElementRepository<Teacher>>();
+			var subjectRepository = serviceProvider.GetRequiredService <IGroupElementRepository<Subject>>();
 			var teacherService = new TeacherService(teacherRepository, subjectRepository);
 
 			Console.WriteLine("Объекты сохранены");
