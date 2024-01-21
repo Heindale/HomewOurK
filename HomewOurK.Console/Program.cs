@@ -1,7 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Application.Interfaces.Repositories;
-using HomewOurK.Domain.Common;
-using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
 using HomewOurK.Persistence.Contexts;
@@ -53,7 +51,7 @@ namespace HomewOurKConsole
 			{
 				Deadline = DateTime.UtcNow + TimeSpan.FromDays(2),
 				Description = "Сделать домашку",
-				GroupId = 1,
+				GroupId = 3,
 				Importance = Importance.Written,
 				SubjectId = 1,				
 			});
