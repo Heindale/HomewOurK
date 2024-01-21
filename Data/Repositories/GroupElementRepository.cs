@@ -8,9 +8,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class GroupElementRepository<Entity> : IGroupElementRepository<Entity> where Entity : GroupElementEntity
 	{
 		private readonly ApplicationContext _context;
-		private ILogger<GroupElementRepository<Entity>> _logger;
+		private ILogger _logger;
 
-		public GroupElementRepository(ApplicationContext context, ILogger<GroupElementRepository<Entity>> logger)
+		public GroupElementRepository(ApplicationContext context, ILogger logger)
 		{
 			_context = context;
 			_logger = logger;

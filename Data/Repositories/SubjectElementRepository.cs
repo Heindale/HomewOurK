@@ -9,9 +9,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class SubjectElementRepository<Entity> : ISubjectElementRepository<Entity> where Entity : SubjectElementEntity
 	{
 		private readonly ApplicationContext _context;
-		private ILogger<SubjectElementRepository<Entity>> _logger;
+		private ILogger _logger;
 
-		public SubjectElementRepository(ApplicationContext context, ILogger<SubjectElementRepository<Entity>> logger)
+		public SubjectElementRepository(ApplicationContext context, ILogger logger)
 		{
 			_context = context;
 			_logger = logger;

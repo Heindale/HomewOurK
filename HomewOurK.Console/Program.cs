@@ -1,5 +1,7 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Application.Interfaces.Repositories;
+using HomewOurK.Domain.Common;
+using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
 using HomewOurK.Persistence.Contexts;
@@ -38,7 +40,12 @@ namespace HomewOurKConsole
 			using var serviceProvider = Services.BuildServiceProvider();
 
 			var _context = new ApplicationContext();
-			var homeworksRepository = serviceProvider.GetRequiredService<ISubjectElementRepository<Homework>>();
+
+			ILoggerFactory loggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+			ILogger logger = loggerFactory.CreateLogger<Program>();
+
+			//var homeworksRepository = serviceProvider.GetRequiredService<ISubjectElementRepository<Homework>>();
+			var homeworksRepository = new SubjectElementRepository<Homework>(_context, logger);
 			var homeworkService = new HomeworkService(homeworksRepository);
 			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1).ToList();
 
@@ -53,11 +60,9 @@ namespace HomewOurKConsole
 
 			Display.PrintHomeworks(homeworks);
 
-			var teacherRepository = serviceProvider.GetRequiredService <IGroupElementRepository<Teacher>>();
-			var subjectRepository = serviceProvider.GetRequiredService <IGroupElementRepository<Subject>>();
+			var teacherRepository = new GroupElementRepository<Teacher>(_context, logger);
+			var subjectRepository = new GroupElementRepository<Subject>(_context, logger);
 			var teacherService = new TeacherService(teacherRepository, subjectRepository);
-
-			teacherService.AddTeacher(null);
 
 			Console.WriteLine("Объекты сохранены");
 
