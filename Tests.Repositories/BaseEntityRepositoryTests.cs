@@ -1,9 +1,11 @@
 using HomewOurK.Domain.Common;
+using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 using HomewOurK.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.ComponentModel.DataAnnotations;
 
 namespace HomewOurK.Tests.Repositories
 {
@@ -16,9 +18,25 @@ namespace HomewOurK.Tests.Repositories
 			// Добавьте свойства, специфичные для вашей сущности
 		}
 
+		public class TestGroup : TestEntity
+		{
+			[Required]
+			[StringLength(25)]
+			public string Name { get; set; } = "";
+
+			[System.ComponentModel.DataAnnotations.Range(0, 99)]
+			public int? Grade { get; set; }
+
+			[StringLength(25)]
+			public string? GroupType { get; set; }
+
+			public List<User> Users { get; set; } = new List<User>();
+			public List<GroupsUsers> GroupsUsers { get; set; } = new List<GroupsUsers>();
+		}
+
 		private BaseEntityRepository<TestEntity> _repository;
 		private Mock<ApplicationContext> _contextMock;
-		private Mock<ILogger<BaseEntityRepository<TestEntity>>> _loggerMock;
+		private Mock<ILogger> _loggerMock;
 
 		[SetUp]
 		public void Setup()
@@ -27,7 +45,7 @@ namespace HomewOurK.Tests.Repositories
 			_contextMock = new Mock<ApplicationContext>();
 			_contextMock.Setup(x => x.Set<TestEntity>()).Returns(Mock.Of<DbSet<TestEntity>>());
 
-			_loggerMock = new Mock<ILogger<BaseEntityRepository<TestEntity>>>();
+			_loggerMock = new Mock<ILogger>();
 
 			// Создаем репозиторий с использованием Mock-объектов
 			_repository = new BaseEntityRepository<TestEntity>(_contextMock.Object, _loggerMock.Object);
@@ -97,6 +115,25 @@ namespace HomewOurK.Tests.Repositories
 
 			// Assert
 			Assert.IsNull(result); // Проверяем, что метод возвращает null для несуществующей сущности
+		}
+
+		[Test]
+		public void Delete_GroupDeleted_ReturnsTrue()
+		{
+			var group = new TestGroup
+			{
+				Id = 1,
+				Name = "test",
+				Grade = 2,
+				GroupType = "Class"
+			};
+
+			_contextMock.Setup(x => x.Set<TestGroup>().Add(group));
+
+			var result = _repository.Delete(group);
+
+			Assert.IsTrue(result);
+			_contextMock.Verify(x => x.SaveChanges(), Times.Once);
 		}
 	}
 }

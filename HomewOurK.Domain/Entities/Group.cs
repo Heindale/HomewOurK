@@ -15,7 +15,7 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(25)]
 		public string? GroupType { get; set; }
 
-		public List<User> Users { get; set; } = new List<User>();
-		public List<GroupsUsers> GroupsUsers { get; set; } = new List<GroupsUsers>();
+		public List<User> Users { get; set; } = [];
+		public List<GroupsUsers> GroupsUsers { get; set; } = [];
 	}
 }

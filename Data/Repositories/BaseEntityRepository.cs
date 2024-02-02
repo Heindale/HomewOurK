@@ -10,13 +10,13 @@ namespace HomewOurK.Persistence.Repositories
 		private readonly ApplicationContext _context;
 		private readonly ILogger _logger;
 
-        public BaseEntityRepository(ApplicationContext context, ILogger logger)
-        {
-            _context = context;
+		public BaseEntityRepository(ApplicationContext context, ILogger logger)
+		{
+			_context = context;
 			_logger = logger;
-        }
+		}
 
-        public IQueryable<Entity> Entities => _context.Set<Entity>();
+		public IQueryable<Entity> Entities => _context.Set<Entity>();
 
 		public bool Add(Entity entity)
 		{
@@ -50,7 +50,7 @@ namespace HomewOurK.Persistence.Repositories
 				return false;
 			}
 		}
-		
+
 		public bool Update(Entity entity)
 		{
 			try
