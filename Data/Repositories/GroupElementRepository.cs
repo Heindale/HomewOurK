@@ -8,9 +8,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class GroupElementRepository<Entity> : IGroupElementRepository<Entity> where Entity : GroupElementEntity
 	{
 		private readonly ApplicationContext _context;
-		private readonly ILogger _logger;
+		private readonly ILogger<GroupElementRepository<Entity>> _logger;
 
-		public GroupElementRepository(ApplicationContext context, ILogger logger)
+		public GroupElementRepository(ApplicationContext context, ILogger<GroupElementRepository<Entity>> logger)
 		{
 			_context = context;
 			_logger = logger;
@@ -41,7 +41,7 @@ namespace HomewOurK.Persistence.Repositories
 			{
 				_logger.LogInformation(ex, "The element could not be added!");
 				return false;
-			}		
+			}
 		}
 
 		public bool Delete(Entity entity)

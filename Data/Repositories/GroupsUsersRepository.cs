@@ -1,4 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
+using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 using Microsoft.Extensions.Logging;
@@ -8,9 +9,9 @@ namespace HomewOurK.Persistence.Repositories
 	public class GroupsUsersRepository : IGroupsUsersRepository
 	{
 		private readonly ApplicationContext _context;
-		private readonly ILogger _logger;
+		private readonly ILogger<GroupsUsersRepository> _logger;
 
-		public GroupsUsersRepository(ApplicationContext context, ILogger logger) 
+		public GroupsUsersRepository(ApplicationContext context, ILogger<GroupsUsersRepository> logger)
 		{
 			_context = context;
 			_logger = logger;

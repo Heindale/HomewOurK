@@ -12,12 +12,12 @@ using Microsoft.Extensions.Logging;
 
 namespace HomewOurKConsole
 {
-    internal class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			Console.WriteLine("HomewOurKConsole");
-            Console.WriteLine();
+			Console.WriteLine();
 
 			var Services = new ServiceCollection()
 				.AddTransient<IHomeworkService, HomeworkService>()
@@ -34,7 +34,6 @@ namespace HomewOurKConsole
 					options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin");
 				});
 
-
 			using var serviceProvider = Services.BuildServiceProvider();
 
 			var _context = new ApplicationContext();
@@ -43,7 +42,7 @@ namespace HomewOurKConsole
 			ILogger logger = loggerFactory.CreateLogger<Program>();
 
 			//var homeworksRepository = serviceProvider.GetRequiredService<ISubjectElementRepository<Homework>>();
-			var homeworksRepository = new SubjectElementRepository<Homework>(_context, logger);
+			var homeworksRepository = new SubjectElementRepository<Homework>(_context, (ILogger<SubjectElementRepository<Homework>>)logger);
 			var homeworkService = new HomeworkService(homeworksRepository);
 			List<Homework> homeworks = homeworkService.GetHomeworksByGroupId(1).ToList();
 
@@ -53,13 +52,13 @@ namespace HomewOurKConsole
 				Description = "Сделать домашку",
 				GroupId = 3,
 				Importance = Importance.Written,
-				SubjectId = 1,				
+				SubjectId = 1,
 			});
 
 			Display.PrintHomeworks(homeworks);
 
-			var teacherRepository = new GroupElementRepository<Teacher>(_context, logger);
-			var subjectRepository = new GroupElementRepository<Subject>(_context, logger);
+			var teacherRepository = new GroupElementRepository<Teacher>(_context, (ILogger<GroupElementRepository<Teacher>>)logger);
+			var subjectRepository = new GroupElementRepository<Subject>(_context, (ILogger<GroupElementRepository<Subject>>)logger);
 			var teacherService = new TeacherService(teacherRepository, subjectRepository);
 
 			Console.WriteLine("Объекты сохранены");

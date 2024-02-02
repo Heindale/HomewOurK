@@ -1,4 +1,9 @@
+using HomewOurK.Application.Interfaces.Repositories;
+using HomewOurK.Application.Interfaces;
+using HomewOurK.Domain.Entities;
+using HomewOurK.Infrastructure.Services;
 using HomewOurK.Persistence.Contexts;
+using HomewOurK.Persistence.Repositories;
 using HomewOurK.WebAPI.Services;
 using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +22,17 @@ namespace HomewOurK.WebAPI
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+			builder.Services.AddLogging();
 			builder.Services.AddDbContext<ApplicationContext>(options =>
-			options.UseSqlite("Data Source=testdb.db"));
-			builder.Services.AddTransient<IHomeworkService, HomeworkService>();
+			options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin"));
+			builder.Services.AddTransient<IHomeworkService, HomeworkService>()
+				.AddTransient<ITeacherService, TeacherService>()
+				.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>()
+				.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>()
+				.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>()
+				.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>()
+				.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>()
+				.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>();
 
 			var app = builder.Build();
 
