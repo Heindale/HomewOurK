@@ -9,19 +9,22 @@ namespace HomewOurK.WebAPI.Controllers
 	public class HomeworksController : ControllerBase
 	{
 		private readonly IHomeworkService _homeworkService;
+
 		public HomeworksController(IHomeworkService homeworkService)
 		{
 			_homeworkService = homeworkService;
 		}
+
 		[HttpGet]
 		public IEnumerable<Homework> GetHomeworks(int id)
 		{
 			return _homeworkService.GetHomeworksByGroupId(id);
 		}
+
 		[HttpGet]
 		public Homework GetHomework(int id, int subjectId, int groupId)
 		{
-			return _homeworkService.GetHomeworkById(id, subjectId, groupId);
+			return _homeworkService.GetHomeworkById(id, subjectId, groupId) ?? new Homework();
 		}
 	}
 }
