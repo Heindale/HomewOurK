@@ -6,16 +6,10 @@ using Microsoft.Extensions.Logging;
 
 namespace HomewOurK.Persistence.Repositories
 {
-	public class GroupsUsersRepository : IGroupsUsersRepository
+	public class GroupsUsersRepository(ApplicationContext context, ILogger<GroupsUsersRepository> logger) : IGroupsUsersRepository
 	{
-		private readonly ApplicationContext _context;
-		private readonly ILogger<GroupsUsersRepository> _logger;
-
-		public GroupsUsersRepository(ApplicationContext context, ILogger<GroupsUsersRepository> logger)
-		{
-			_context = context;
-			_logger = logger;
-		}
+		private readonly ApplicationContext _context = context;
+		private readonly ILogger<GroupsUsersRepository> _logger = logger;
 
 		public IQueryable<GroupsUsers> Entities => _context.GroupsUsers;
 
