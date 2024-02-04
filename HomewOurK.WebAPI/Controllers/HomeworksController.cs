@@ -6,14 +6,9 @@ namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class HomeworksController : ControllerBase
+	public class HomeworksController(IHomeworkService homeworkService) : ControllerBase
 	{
-		private readonly IHomeworkService _homeworkService;
-
-		public HomeworksController(IHomeworkService homeworkService)
-		{
-			_homeworkService = homeworkService;
-		}
+		private readonly IHomeworkService _homeworkService = homeworkService;
 
 		[HttpGet]
 		public IEnumerable<Homework> GetHomeworks(int id)

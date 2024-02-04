@@ -48,7 +48,7 @@ namespace HomewOurK.Tests.Repositories
 			_loggerMock = new Mock<ILogger>();
 
 			// Создаем репозиторий с использованием Mock-объектов
-			_repository = new BaseEntityRepository<TestEntity>(_contextMock.Object, _loggerMock.Object);
+			_repository = new BaseEntityRepository<TestEntity>(_contextMock.Object, (ILogger<BaseEntityRepository<TestEntity>>)_loggerMock.Object);
 		}
 
 		[Test]
