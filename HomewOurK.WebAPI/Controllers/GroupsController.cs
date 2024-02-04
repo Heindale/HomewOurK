@@ -1,4 +1,5 @@
-﻿using HomewOurK.WebAPI.Services.Interfaces;
+﻿using HomewOurK.Domain.Entities;
+using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomewOurK.WebAPI.Controllers
@@ -37,6 +38,14 @@ namespace HomewOurK.WebAPI.Controllers
 			if (group != null)
 				return Ok(group);
 			return NotFound($"The group with id = {groupId} wasn't found");
+		}
+
+		[HttpPost]
+		public IActionResult AddGroup(Group group)
+		{
+			if (_groupService.CreateNewGroup(group))
+				return Ok();
+			return BadRequest();
 		}
 	}
 }

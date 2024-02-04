@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Domain.Common;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Entities
 {
@@ -15,7 +16,9 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(25)]
 		public string? GroupType { get; set; }
 
+		[JsonIgnore]
 		public List<User> Users { get; set; } = [];
+		[JsonIgnore]
 		public List<GroupsUsers> GroupsUsers { get; set; } = [];
 	}
 }
