@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Entities
 {
@@ -6,9 +7,13 @@ namespace HomewOurK.Domain.Entities
 	public class GroupsUsers
 	{
 		public int GroupId { get; set; }
+
+		[JsonIgnore]
 		public Group? Group { get; set; }
 
 		public int UserId { get; set; }
+
+		[JsonIgnore]
 		public User? User { get; set; }
 
 		public int UserLevel { get; set; }

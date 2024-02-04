@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Domain.Common;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Entities
 {
@@ -9,6 +10,7 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(50)]
 		public string Name { get; set; } = "";
 
+		[JsonIgnore]
 		public List<Teacher> Teachers { get; set; } = new List<Teacher>();
 	}
 }

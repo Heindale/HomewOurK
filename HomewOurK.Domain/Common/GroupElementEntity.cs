@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using HomewOurK.Domain.Common.Interfaces;
+using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Common
 {
@@ -16,6 +17,8 @@ namespace HomewOurK.Domain.Common
 		[Required]
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int GroupId { get; set; }
+
+		[JsonIgnore]
 		public Group? Group { get; set; }
 	}
 }

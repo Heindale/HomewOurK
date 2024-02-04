@@ -1,5 +1,6 @@
 ﻿using HomewOurK.Domain.Common;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Entities
 {
@@ -11,6 +12,8 @@ namespace HomewOurK.Domain.Entities
 		public string Link { get; set; } = "";
 
 		public int SubjectId { get; set; }
+
+		[JsonIgnore]
 		public Subject? Subject { get; set; }
 	}
 }
