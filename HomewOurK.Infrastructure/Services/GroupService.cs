@@ -4,16 +4,10 @@ using HomewOurK.WebAPI.Services.Interfaces;
 
 namespace HomewOurK.Infrastructure.Services
 {
-	public class GroupService : IGroupService
+	public class GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository) : IGroupService
 	{
-		private readonly IBaseEntityRepository<Group> _groupsRepository;
-		private readonly IGroupsUsersRepository _groupsUsersRepository;
-
-		public GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository)
-		{
-			_groupsRepository = groupsRepository;
-			_groupsUsersRepository = groupsUsersRepository;
-		}
+		private readonly IBaseEntityRepository<Group> _groupsRepository = groupsRepository;
+		private readonly IGroupsUsersRepository _groupsUsersRepository = groupsUsersRepository;
 
 		public bool AddUserToGroup(Group group, User user)
 		{
@@ -69,7 +63,7 @@ namespace HomewOurK.Infrastructure.Services
 		public IEnumerable<Group> GetGroupsByUserId(int userId)
 		{
 			var groupsUsers = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).ToList();
-			List<Group> groups = new List<Group>();
+			List<Group> groups = [];
 			for (int i = 0; i < groupsUsers.Count; i++)
 			{
 				var newGroup = _groupsRepository.GetById(groupsUsers[i].GroupId);

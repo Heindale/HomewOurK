@@ -5,16 +5,10 @@ using Microsoft.Extensions.Logging;
 
 namespace HomewOurK.Persistence.Repositories
 {
-	public class BaseEntityRepository<Entity> : IBaseEntityRepository<Entity> where Entity : BaseEntity
+	public class BaseEntityRepository<Entity>(ApplicationContext context, ILogger<BaseEntityRepository<Entity>> logger) : IBaseEntityRepository<Entity> where Entity : BaseEntity
 	{
-		private readonly ApplicationContext _context;
-		private readonly ILogger<BaseEntityRepository<Entity>> _logger;
-
-		public BaseEntityRepository(ApplicationContext context, ILogger<BaseEntityRepository<Entity>> logger)
-		{
-			_context = context;
-			_logger = logger;
-		}
+		private readonly ApplicationContext _context = context;
+		private readonly ILogger<BaseEntityRepository<Entity>> _logger = logger;
 
 		public IQueryable<Entity> Entities => _context.Set<Entity>();
 
