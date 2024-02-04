@@ -25,14 +25,14 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddLogging();
 			builder.Services.AddDbContext<ApplicationContext>(options =>
 			options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin"));
-			builder.Services.AddTransient<IHomeworkService, HomeworkService>()
-				.AddTransient<ITeacherService, TeacherService>()
-				.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>()
-				.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>()
-				.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>()
-				.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>()
-				.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>()
-				.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>();
+			builder.Services.AddTransient<IHomeworkService, HomeworkService>();
+			builder.Services.AddTransient<ITeacherService, TeacherService>();
+			builder.Services.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>();
+			builder.Services.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>();
+			builder.Services.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>();
+			builder.Services.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>();
+			builder.Services.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>();
+			builder.Services.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>();
 
 			var app = builder.Build();
 
