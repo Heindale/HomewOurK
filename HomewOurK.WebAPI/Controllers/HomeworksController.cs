@@ -12,16 +12,22 @@ namespace HomewOurK.WebAPI.Controllers
 
 		[HttpGet]
 		[Route("GetHomeworks")]
-		public IEnumerable<Homework> GetHomeworks(int id)
+		public IActionResult GetHomeworks(int id)
 		{
-			return _homeworkService.GetHomeworksByGroupId(id);
+			var homeworks = _homeworkService.GetHomeworksByGroupId(id);
+
+			return Ok(homeworks);
 		}
 
 		[HttpGet]
 		[Route("GetHomework")]
-		public Homework GetHomework(int id, int subjectId, int groupId)
+		public IActionResult GetHomework(int id, int subjectId, int groupId)
 		{
-			return _homeworkService.GetHomeworkById(id, subjectId, groupId) ?? new Homework();
+			var homework = _homeworkService.GetHomeworkById(id, subjectId, groupId);
+
+			if (homework != null)
+				return Ok(homework);
+			return NotFound();
 		}
 	}
 }
