@@ -60,6 +60,11 @@ namespace HomewOurK.Infrastructure.Services
 			return _groupsRepository.GetById(groupId);
 		}
 
+		public IEnumerable<Group> GetAll()
+		{
+			return _groupsRepository.GetAll();
+		}
+
 		public IEnumerable<Group> GetGroupsByUserId(int userId)
 		{
 			var groupsUsers = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).ToList();
