@@ -12,7 +12,11 @@ namespace HomewOurK.WebAPI.Controllers
 		[HttpGet]
 		public IActionResult GetAll()
 		{
-			return Ok(_groupService.GetAll());
+			var groups = _groupService.GetAll();
+
+			if (groups.Any())
+				return Ok(groups);
+			return NotFound("No groups were found");
 		}
 
 		[HttpGet("GetGroups")]
@@ -20,7 +24,9 @@ namespace HomewOurK.WebAPI.Controllers
 		{
 			var groups = _groupService.GetGroupsByUserId(userId);
 
-			return Ok(groups);
+			if (groups.Any())
+				return Ok(groups);
+			return NotFound("No groups were found for the user with id = " + userId);
 		}
 
 		[HttpGet("GetGroup")]
@@ -30,7 +36,7 @@ namespace HomewOurK.WebAPI.Controllers
 
 			if (group != null)
 				return Ok(group);
-			return NotFound();
+			return NotFound($"The group with id = {groupId} wasn't found");
 		}
 	}
 }
