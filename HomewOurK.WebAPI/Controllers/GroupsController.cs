@@ -9,7 +9,15 @@ namespace HomewOurK.WebAPI.Controllers
 	{
 		private readonly IGroupService _groupService = groupService;
 
-		[HttpGet]
+		[HttpGet("GetGroups")]
+		public IActionResult GetGroups(int userId)
+		{
+			var groups = _groupService.GetGroupsByUserId(userId);
+
+			return Ok(groups);
+		}
+
+		[HttpGet("GetGroup")]
 		public IActionResult GetGroup(int groupId)
 		{
 			var group = _groupService.GetGroupById(groupId);

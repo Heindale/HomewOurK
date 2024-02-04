@@ -42,7 +42,7 @@ namespace HomewOurK.Infrastructure.Services
 			var groupsUsers = new GroupsUsers
 			{
 				Group = group,
-				GroupId = group.Id,				
+				GroupId = group.Id,
 				User = user,
 				UserId = user.Id
 			};
@@ -68,7 +68,10 @@ namespace HomewOurK.Infrastructure.Services
 			{
 				var newGroup = _groupsRepository.GetById(groupsUsers[i].GroupId);
 				if (newGroup is not null)
+				{
+					newGroup.GroupsUsers = [];
 					groups.Add(newGroup);
+				}
 			}
 			return groups;
 		}
