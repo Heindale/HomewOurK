@@ -55,5 +55,13 @@ namespace HomewOurK.WebAPI.Controllers
 				return Ok();
 			return BadRequest();
 		}
+
+		[HttpDelete]
+		public IActionResult DeleteGroup(Group group)
+		{
+			if (_groupService.DeleteGroup(group))
+				return Ok();
+			return BadRequest();
+		}
 	}
 }

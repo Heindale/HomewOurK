@@ -31,9 +31,6 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
-				if (_context.Set<Entity>().Find(entity) == null)
-					return false;
-
 				_context.Set<Entity>().Remove(entity);
 				_context.SaveChanges();
 				return true;
