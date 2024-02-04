@@ -47,5 +47,13 @@ namespace HomewOurK.WebAPI.Controllers
 				return Ok();
 			return BadRequest();
 		}
+
+		[HttpPatch]
+		public IActionResult UpdateGroup(Group group)
+		{
+			if (_groupService.UpdateGroup(group))
+				return Ok();
+			return BadRequest();
+		}
 	}
 }
