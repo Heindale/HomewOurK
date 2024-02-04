@@ -1,6 +1,7 @@
 ﻿using HomewOurK.Domain.Entities;
 using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace HomewOurK.WebAPI.Controllers
 {
@@ -15,7 +16,9 @@ namespace HomewOurK.WebAPI.Controllers
 		{
 			var homeworks = _homeworkService.GetHomeworksByGroupId(groupId);
 
-			return Ok(homeworks);
+			if (homeworks.Any())
+				return Ok(homeworks);
+			return NotFound("No homework was found for the group with id = " + groupId);
 		}
 
 		[HttpGet("GetHomework")]
@@ -25,7 +28,7 @@ namespace HomewOurK.WebAPI.Controllers
 
 			if (homework != null)
 				return Ok(homework);
-			return NotFound();
+			return NotFound($"The homework wasn't found");
 		}
 	}
 }
