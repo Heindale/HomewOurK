@@ -10,10 +10,9 @@ namespace HomewOurK.WebAPI.Controllers
 		private readonly IGroupService _groupService = groupService;
 
 		[HttpGet]
-		[Route("GetGroup")]
-		public IActionResult GetGroup(int id)
+		public IActionResult GetGroup(int groupId)
 		{
-			var group = _groupService.GetGroupById(id);
+			var group = _groupService.GetGroupById(groupId);
 
 			if (group != null)
 				return Ok(group);

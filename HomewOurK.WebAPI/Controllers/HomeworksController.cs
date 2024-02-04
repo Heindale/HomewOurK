@@ -10,20 +10,18 @@ namespace HomewOurK.WebAPI.Controllers
 	{
 		private readonly IHomeworkService _homeworkService = homeworkService;
 
-		[HttpGet]
-		[Route("GetHomeworks")]
-		public IActionResult GetHomeworks(int id)
+		[HttpGet("GetHomeworks")]
+		public IActionResult GetHomeworks(int groupId)
 		{
-			var homeworks = _homeworkService.GetHomeworksByGroupId(id);
+			var homeworks = _homeworkService.GetHomeworksByGroupId(groupId);
 
 			return Ok(homeworks);
 		}
 
-		[HttpGet]
-		[Route("GetHomework")]
-		public IActionResult GetHomework(int id, int subjectId, int groupId)
+		[HttpGet("GetHomework")]
+		public IActionResult GetHomework(int homeworkId, int subjectId, int groupId)
 		{
-			var homework = _homeworkService.GetHomeworkById(id, subjectId, groupId);
+			var homework = _homeworkService.GetHomeworkById(homeworkId, subjectId, groupId);
 
 			if (homework != null)
 				return Ok(homework);
