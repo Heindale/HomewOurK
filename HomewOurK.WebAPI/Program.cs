@@ -26,6 +26,7 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddDbContext<ApplicationContext>(options =>
 			options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin"));
 			builder.Services.AddTransient<IHomeworkService, HomeworkService>();
+			builder.Services.AddTransient<IGroupService, GroupService>();
 			builder.Services.AddTransient<ITeacherService, TeacherService>();
 			builder.Services.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>();
 			builder.Services.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>();
