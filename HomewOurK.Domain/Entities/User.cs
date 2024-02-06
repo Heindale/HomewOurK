@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace HomewOurK.Domain.Entities
 {
-	[Index(nameof(Email), nameof(Username), IsUnique = true)]
+	[Index(nameof(Email), IsUnique = true)]
 	public class User : BaseEntity
 	{
 		[Required]
@@ -26,9 +26,9 @@ namespace HomewOurK.Domain.Entities
 		[JsonIgnore]
 		public string? Password { get; set; }
 
-		public int GroupsCount { get; set; }
+		public int GroupsCount { get; protected set; }
 
-		public DateOnly RegistrationDate { get; set; } = DateOnly.FromDateTime(DateTime.UtcNow);
+		public DateOnly RegistrationDate { get; protected set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
 		[JsonIgnore]
 		public List<Group> Groups { get; set; } = [];
