@@ -4,14 +4,9 @@ using HomewOurK.WebAPI.Services.Interfaces;
 
 namespace HomewOurK.WebAPI.Services
 {
-	public class HomeworkService : IHomeworkService
+	public class HomeworkService(ISubjectElementRepository<Homework> homeworkRepository) : IHomeworkService
 	{
-		private readonly ISubjectElementRepository<Homework> _homeworkRepository;
-
-		public HomeworkService(ISubjectElementRepository<Homework> homeworkRepository)
-		{
-			_homeworkRepository = homeworkRepository;
-		}
+		private readonly ISubjectElementRepository<Homework> _homeworkRepository = homeworkRepository;
 
 		public bool CompleteHomework(Homework homework)
 		{

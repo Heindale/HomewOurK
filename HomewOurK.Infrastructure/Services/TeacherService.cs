@@ -4,17 +4,11 @@ using HomewOurK.Domain.Entities;
 
 namespace HomewOurK.Infrastructure.Services
 {
-    public class TeacherService : ITeacherService
+	public class TeacherService(IGroupElementRepository<Teacher> teacherRepository,
+			IGroupElementRepository<Subject> subjectRepository) : ITeacherService
 	{
-		private readonly IGroupElementRepository<Teacher> _teacherRepository;
-		private readonly IGroupElementRepository<Subject> _subjectsRepository;
-
-        public TeacherService(IGroupElementRepository<Teacher> teacherRepository, 
-			IGroupElementRepository<Subject> subjectRepository)
-        {
-            _teacherRepository = teacherRepository;
-			_subjectsRepository = subjectRepository;
-        }
+		private readonly IGroupElementRepository<Teacher> _teacherRepository = teacherRepository;
+		private readonly IGroupElementRepository<Subject> _subjectsRepository = subjectRepository;
 
 		public bool AddSubject(int teacherId, int groupId, int subjectId)
 		{
@@ -35,7 +29,7 @@ namespace HomewOurK.Infrastructure.Services
 			{
 				teacher.Subjects.Add(subject);
 				return _teacherRepository.Update(teacher);
-			}	
+			}
 			return false;
 		}
 

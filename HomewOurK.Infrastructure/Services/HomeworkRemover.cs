@@ -4,14 +4,9 @@ using HomewOurK.Persistence.Repositories;
 
 namespace HomewOurK.Infrastructure.Services
 {
-	public class HomeworkRemover : IHomeworkRemover
+	public class HomeworkRemover(SubjectElementRepository<Homework> homeworkRepository) : IHomeworkRemover
 	{
-		private readonly SubjectElementRepository<Homework> _homeworkRepository;
-
-		public HomeworkRemover(SubjectElementRepository<Homework> homeworkRepository)
-		{
-			_homeworkRepository = homeworkRepository;
-		}
+		private readonly SubjectElementRepository<Homework> _homeworkRepository = homeworkRepository;
 
 		public void RemoveHomework()
 		{
