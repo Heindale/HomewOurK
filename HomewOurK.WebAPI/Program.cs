@@ -28,6 +28,7 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddTransient<IHomeworkService, HomeworkService>();
 			builder.Services.AddTransient<IUserService, UserService>();
 			builder.Services.AddTransient<IGroupService, GroupService>();
+			builder.Services.AddTransient<ISubjectService, SubjectService>();
 			builder.Services.AddTransient<ITeacherService, TeacherService>();
 			builder.Services.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>();
 			builder.Services.AddTransient<IBaseEntityRepository<User>, BaseEntityRepository<User>>();

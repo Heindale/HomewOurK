@@ -4,7 +4,7 @@ using HomewOurK.Domain.Entities;
 
 namespace HomewOurK.Infrastructure.Services
 {
-	internal class SubjectService(IGroupElementRepository<Teacher> teacherRepository,
+	public class SubjectService(IGroupElementRepository<Teacher> teacherRepository,
 			IGroupElementRepository<Subject> subjectRepository) : ISubjectService
 	{
 		private readonly IGroupElementRepository<Teacher> _teacherRepository = teacherRepository;

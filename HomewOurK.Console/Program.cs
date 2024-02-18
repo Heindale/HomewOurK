@@ -22,6 +22,7 @@ namespace HomewOurKConsole
 			var Services = new ServiceCollection()
 				.AddTransient<IHomeworkService, HomeworkService>()
 				.AddTransient<ITeacherService, TeacherService>()
+				.AddTransient<ISubjectService, ISubjectService>()
 				.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>()
 				.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>()
 				.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>()
