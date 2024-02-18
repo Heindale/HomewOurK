@@ -18,7 +18,7 @@ namespace HomewOurK.WebAPI.Controllers
 
 			if (homeworks.Any())
 				return Ok(homeworks);
-			return NotFound("No homework was found for the group with id = " + groupId);
+			return NotFound("No homeworks was found for the group with id = " + groupId);
 		}
 
 		[HttpGet("GetHomework")]
