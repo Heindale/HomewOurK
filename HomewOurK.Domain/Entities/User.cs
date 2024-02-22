@@ -23,8 +23,7 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(maximumLength: 25, MinimumLength = 2)]
 		public string? Surname { get; set; }
 
-		[JsonIgnore]
-		public string? Password { get; set; }
+		public string? Password { private get; set; }
 
 		public int GroupsCount { get; protected set; }
 
