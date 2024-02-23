@@ -53,9 +53,6 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
-				if (_context.Set<Entity>().Find(entity) == null)
-					return false;
-
 				_context.Set<Entity>().Remove(entity);
 				_context.SaveChanges();
 				return true;
@@ -89,7 +86,8 @@ namespace HomewOurK.Persistence.Repositories
 
 		public Entity? GetById(int id, int subjectId, int groupId)
 		{
-			return (_context.Set<Entity>().Find(id, subjectId, groupId));
+			return (_context.Set<Entity>()
+				.FirstOrDefault(x => x.Id == id && x.SubjectId == subjectId && x.GroupId == groupId));
 		}
 	}
 }

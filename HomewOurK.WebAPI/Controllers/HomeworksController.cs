@@ -30,5 +30,30 @@ namespace HomewOurK.WebAPI.Controllers
 				return Ok(homework);
 			return NotFound($"The homework wasn't found");
 		}
+
+		[HttpPost]
+		public IActionResult AddHomework(Homework homework)
+		{
+			homework.Id = 0;
+			if (_homeworkService.CreateNewHomework(homework))
+				return Ok(homework);
+			return BadRequest("The homework has not been added");
+		}
+
+		[HttpPatch]
+		public IActionResult UpdateHomework(Homework homework)
+		{
+			if (_homeworkService.UpdateHomework(homework))
+				return Ok(homework);
+			return BadRequest("The homework has not been updated");
+		}
+
+		[HttpDelete]
+		public IActionResult DeleteHomework(Homework homework)
+		{
+			if (_homeworkService.DeleteHomework(homework))
+				return Ok(homework);
+			return BadRequest("The homework has not been deleted");
+		}
 	}
 }
