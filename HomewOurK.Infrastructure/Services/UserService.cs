@@ -11,6 +11,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool AddUser(User user)
 		{
+			var password = user.Password;
 			return _usersRepository.Add(user);
 		}
 
@@ -21,12 +22,20 @@ namespace HomewOurK.Infrastructure.Services
 
 		public User? GetUserById(int userId)
 		{
-			return _usersRepository.GetById(userId);
+			var user = _usersRepository.GetById(userId);
+			if (user is not null)
+				user.Password = null;
+			return user;
 		}
 
 		public IEnumerable<User> GetAll()
 		{
-			return _usersRepository.GetAll();
+			var users = _usersRepository.GetAll();
+			foreach (var user in users)
+			{
+				user.Password = null;
+			}
+			return users;
 		}
 
 		public bool UpdateUser(User user)
@@ -60,7 +69,10 @@ namespace HomewOurK.Infrastructure.Services
 			{
 				var newUser = _usersRepository.GetById(groupsUsers[i].UserId);
 				if (newUser is not null)
+				{
+					newUser.Password = null;
 					users.Add(newUser);
+				}
 			}
 			return users;
 		}
