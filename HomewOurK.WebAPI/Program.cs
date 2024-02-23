@@ -37,6 +37,7 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddTransient<IGroupElementRepository<Teacher>, GroupElementRepository<Teacher>>();
 			builder.Services.AddTransient<IGroupElementRepository<Attachment>, GroupElementRepository<Attachment>>();
 			builder.Services.AddTransient<IGroupsUsersRepository, GroupsUsersRepository>();
+			builder.Services.AddTransient<ITeacherRepository, TeacherRepository>();
 			builder.Services.AddTransient<ISubjectElementRepository<Homework>, SubjectElementRepository<Homework>>();
 
 			var app = builder.Build();

@@ -4,10 +4,10 @@ using HomewOurK.Domain.Entities;
 
 namespace HomewOurK.Infrastructure.Services
 {
-	public class TeacherService(IGroupElementRepository<Teacher> teacherRepository,
+	public class TeacherService(ITeacherRepository teacherRepository,
 			IGroupElementRepository<Subject> subjectRepository) : ITeacherService
 	{
-		private readonly IGroupElementRepository<Teacher> _teacherRepository = teacherRepository;
+		private readonly ITeacherRepository _teacherRepository = teacherRepository;
 		private readonly IGroupElementRepository<Subject> _subjectsRepository = subjectRepository;
 
 		public bool AddSubject(int teacherId, int groupId, int subjectId)
@@ -40,15 +40,16 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool DeleteSubject(int teacherId, int groupId, int subjectId)
 		{
-			var teacher = _teacherRepository.GetById(teacherId, groupId);
-			var subject = _subjectsRepository.GetById(subjectId, groupId);
+			//var teacher = _teacherRepository.GetById(teacherId, groupId);
+			//var subject = _subjectsRepository.GetById(subjectId, groupId);
 
-			if (teacher != null && subject != null)
-			{
-				teacher.Subjects.Remove(subject);
-				return _teacherRepository.Update(teacher);
-			}
-			return false;
+			//if (teacher != null && subject != null)
+			//{
+			//	teacher.Subjects.Remove(subject);
+			//	return _teacherRepository.Update(teacher);
+			//}
+			//return false;
+			return _teacherRepository.DeleteSubjectFromTeacher(teacherId, groupId, subjectId);
 		}
 
 		public bool DeleteSubject(Teacher teacher, Subject subject)

@@ -7,9 +7,20 @@ namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class TeachersController(ITeacherService teacherService) : ControllerBase
+	public class TeachersController(ITeacherService teacherService, ISubjectService subjectService) : ControllerBase
 	{
 		private readonly ITeacherService _teacherService = teacherService;
+		private readonly ISubjectService _subjectService = subjectService;
+
+		[HttpGet("GetTeachersBySubjectId")]
+		public IActionResult GetTeachersBySubjectId(int subjectId, int groupId)
+		{
+			var teachers = _subjectService.GetTeachersBySubjectId(subjectId, groupId);
+
+			if (teachers is not null && teachers.Any())
+				return Ok(teachers);
+			return NotFound("No teachers was found for the group with id = " + groupId);
+		}
 
 		[HttpGet("GetTeachers")]
 		public IActionResult GetTeachers(int groupId)
