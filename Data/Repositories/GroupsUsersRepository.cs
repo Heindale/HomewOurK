@@ -1,5 +1,4 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
-using HomewOurK.Domain.Common.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Persistence.Contexts;
 using Microsoft.Extensions.Logging;
@@ -32,8 +31,6 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
-				if (_context.GroupsUsers.Find(groupsUsers) == null)
-					return false;
 				_context.GroupsUsers.Remove(groupsUsers);
 				_context.SaveChanges();
 				return true;
@@ -49,8 +46,6 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
-				if (_context.GroupsUsers.Find(groupsUsers) == null)
-					return false;
 				_context.GroupsUsers.Update(groupsUsers);
 				_context.SaveChanges();
 				return true;
@@ -64,12 +59,13 @@ namespace HomewOurK.Persistence.Repositories
 
 		public IEnumerable<GroupsUsers> GetAll()
 		{
-			return _context.GroupsUsers.ToList();
+			return _context.GroupsUsers;
 		}
 
 		public GroupsUsers? GetById(int groupId, int userId)
 		{
-			return _context.GroupsUsers.Find(groupId, userId);
+			return _context.GroupsUsers
+				.FirstOrDefault(x => x.GroupId == groupId && x.UserId == userId);
 		}
 	}
 }
