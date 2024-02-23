@@ -30,6 +30,7 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddTransient<IGroupService, GroupService>();
 			builder.Services.AddTransient<ISubjectService, SubjectService>();
 			builder.Services.AddTransient<ITeacherService, TeacherService>();
+			builder.Services.AddTransient<IAttachmentService, AttachmentService>();
 			builder.Services.AddTransient<IBaseEntityRepository<Group>, BaseEntityRepository<Group>>();
 			builder.Services.AddTransient<IBaseEntityRepository<User>, BaseEntityRepository<User>>();
 			builder.Services.AddTransient<IGroupElementRepository<Subject>, GroupElementRepository<Subject>>();

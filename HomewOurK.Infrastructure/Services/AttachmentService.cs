@@ -1,14 +1,14 @@
 ﻿using HomewOurK.Application.Interfaces;
+using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Entities;
-using HomewOurK.Persistence.Repositories;
 
 namespace HomewOurK.Infrastructure.Services
 {
 	public class AttachmentService : IAttachmentService
 	{
-		private readonly GroupElementRepository<Attachment> _attachmentRepository;
+		private readonly IGroupElementRepository<Attachment> _attachmentRepository;
 
-		public AttachmentService(GroupElementRepository<Attachment> attachmentRepository)
+		public AttachmentService(IGroupElementRepository<Attachment> attachmentRepository)
 		{
 			_attachmentRepository = attachmentRepository;
 		}
@@ -18,7 +18,7 @@ namespace HomewOurK.Infrastructure.Services
 			return _attachmentRepository.GetById(attachmentId, groupId);
 		}
 
-		public IEnumerable<Attachment>? GetAttachmentsByGroupId(int groupId)
+		public IEnumerable<Attachment> GetAttachmentsByGroupId(int groupId)
 		{
 			return _attachmentRepository.Entities.Where(x => x.GroupId == groupId);
 		}
