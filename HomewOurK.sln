@@ -28,7 +28,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomewOurK.Application", "Ho
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9A8A8361-A75C-4469-BE50-40F97408E7CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Repositories", "Tests.Repositories\Tests.Repositories.csproj", "{2F124EFA-A98B-46A5-95BD-8C05245AFD88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests.Repositories", "Tests.Repositories\Tests.Repositories.csproj", "{2F124EFA-A98B-46A5-95BD-8C05245AFD88}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D47ECD79-5CE7-4ABF-9438-7EE89FA54ACC}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -55,7 +55,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public IEnumerable<Subject> GetSubjectsByGroupId(int groupId)
 		{
-			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId).ToList();
+			return _subjectsRepository.Entities.Where(x => x.GroupId == groupId);
 		}
 
 		public IEnumerable<Teacher>? GetTeachersBySubjectId(int subjectId, int groupId)
