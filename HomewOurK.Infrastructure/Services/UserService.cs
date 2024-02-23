@@ -1,6 +1,7 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Entities;
+using HomewOurK.Infrastructure.Extensions;
 
 namespace HomewOurK.Infrastructure.Services
 {
@@ -12,6 +13,12 @@ namespace HomewOurK.Infrastructure.Services
 		public bool AddUser(User user)
 		{
 			var password = user.Password;
+
+			if (password != null)
+				user.Password = PasswordHasher.HashPassword(password);
+			else
+				return false;
+
 			return _usersRepository.Add(user);
 		}
 

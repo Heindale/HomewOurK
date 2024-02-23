@@ -11,8 +11,4 @@
     <ProjectReference Include="..\HomewOurK.Domain\HomewOurK.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-
 </Project>
