@@ -7,6 +7,7 @@ using HomewOurK.Persistence.Repositories;
 using HomewOurK.WebAPI.Services;
 using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace HomewOurK.WebAPI
 {
@@ -23,6 +24,15 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddLogging();
+			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+				.AddCookie(options =>
+				{
+					options.Cookie.HttpOnly = true;
+					options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+					options.Cookie.SameSite = SameSiteMode.Strict;
+					options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Время жизни cookie
+					options.SlidingExpiration = true;
+				});
 			builder.Services.AddDbContext<ApplicationContext>(options =>
 			options.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin"));
 			builder.Services.AddTransient<IHomeworkService, HomeworkService>();
@@ -51,6 +61,7 @@ namespace HomewOurK.WebAPI
 
 			app.UseHttpsRedirection();
 
+			app.UseAuthentication();
 			app.UseAuthorization();
 
 			app.MapControllerRoute(

@@ -22,6 +22,20 @@ namespace HomewOurK.Infrastructure.Services
 			return _usersRepository.Add(user);
 		}
 
+		public bool IsValidUser(User user)
+		{
+			var dBUser = _usersRepository.GetById(user.Id);
+
+			if (dBUser != null && user.Password != null)
+			{
+				var dBPassword = dBUser.Password;
+				if (dBPassword != null)
+					return PasswordHasher.VerifyPassword(user.Password, dBPassword);
+			}
+
+			return false;
+		}
+
 		public bool DeleteUser(User user)
 		{
 			return _usersRepository.Delete(user);
@@ -47,6 +61,13 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool UpdateUser(User user)
 		{
+			var password = user.Password;
+
+			if (password != null)
+				user.Password = PasswordHasher.HashPassword(password);
+			else
+				return false;
+
 			return _usersRepository.Update(user);
 		}
 

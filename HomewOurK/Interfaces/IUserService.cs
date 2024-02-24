@@ -12,6 +12,8 @@ namespace HomewOurK.Application.Interfaces
 
 		bool AddUser(User user); // return true if user was added
 
+		bool IsValidUser(User user);
+
 		bool UpdateUser(User user); // return true if user was updated
 
 		bool DeleteUser(User user); // return true if user was deleted
