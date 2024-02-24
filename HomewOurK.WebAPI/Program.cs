@@ -24,11 +24,13 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
 			builder.Services.AddLogging();
+			builder.Services.AddCors();
+			builder.Services.AddHttpContextAccessor();
 			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
 				{
-					options.Cookie.HttpOnly = true;
-					options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+					options.Cookie.HttpOnly = false;
+					options.Cookie.SecurePolicy = CookieSecurePolicy.None;
 					options.Cookie.SameSite = SameSiteMode.Strict;
 					options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Время жизни cookie
 					options.SlidingExpiration = true;
@@ -58,6 +60,13 @@ namespace HomewOurK.WebAPI
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
+
+			app.UseCors(builder =>
+			{
+				builder.AllowAnyOrigin()
+				.AllowAnyMethod()
+				.AllowAnyHeader();
+			});
 
 			app.UseHttpsRedirection();
 

@@ -1,11 +1,13 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
+	[Authorize]
 	[ApiController]
 	public class TeachersController(ITeacherService teacherService, ISubjectService subjectService) : ControllerBase
 	{

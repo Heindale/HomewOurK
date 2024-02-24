@@ -1,25 +1,43 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
+using HomewOurK.WebAPI.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
+	[Authorize]
 	[ApiController]
-	public class SubjectsController(ISubjectService subjectService) : ControllerBase
+	public class SubjectsController : ControllerBase
 	{
-		private readonly ISubjectService _subjectService = subjectService;
+		private readonly ISubjectService _subjectService;
+		private readonly IUserService _userService;
+		private readonly IHttpContextAccessor _httpContextAccessor;
+
+		public SubjectsController(ISubjectService subjectService, IUserService userService, IHttpContextAccessor httpContextAccessor)
+		{
+			_subjectService = subjectService;
+			_userService = userService;
+			_httpContextAccessor = httpContextAccessor;
+		}
 
 		[HttpGet("GetSubjects")]
 		public IActionResult GetSubjects(int groupId)
 		{
-			var subjects = _subjectService.GetSubjectsByGroupId(groupId);
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
 
-			if (subjects.Any())
-				return Ok(subjects);
-			return NotFound("No subjects was found for the group with id = " + groupId);
+			if (_userService.UserInGroup(groupId, email))
+			{
+				var subjects = _subjectService.GetSubjectsByGroupId(groupId);
+
+				if (subjects.Any())
+					return Ok(subjects);
+				return NotFound("No subjects was found for the group with id = " + groupId);
+			}
+			return BadRequest();
 		}
 
 		[HttpGet("GetSubject")]

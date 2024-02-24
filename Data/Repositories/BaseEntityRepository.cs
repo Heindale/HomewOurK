@@ -2,6 +2,8 @@
 using HomewOurK.Persistence.Contexts;
 using HomewOurK.Domain.Common;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using HomewOurK.Domain.Common.Interfaces;
 
 namespace HomewOurK.Persistence.Repositories
 {

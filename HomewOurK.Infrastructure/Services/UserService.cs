@@ -10,6 +10,24 @@ namespace HomewOurK.Infrastructure.Services
 		private readonly IGroupsUsersRepository _groupsUsersRepository = groupsUsersRepository;
 		private readonly IBaseEntityRepository<User> _usersRepository = usersRepository;
 
+		public User? GetUserByEmail(string email)
+		{
+			var user = _usersRepository.Entities.FirstOrDefault(u => u.Email == email);
+
+			return user;
+		}
+
+		public bool UserInGroup(int groupId, string email)
+		{
+			var user = GetUserByEmail(email);
+
+			if (user == null)
+				return false;
+
+			return _groupsUsersRepository.Entities
+				.Any(x => x.UserId == user.Id && x.GroupId == groupId);
+		}
+
 		public bool AddUser(User user)
 		{
 			var password = user.Password;
@@ -24,7 +42,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool IsValidUser(User user)
 		{
-			var dBUser = _usersRepository.GetById(user.Id);
+			var dBUser = _usersRepository.Entities.FirstOrDefault(u => u.Email == user.Email);
 
 			if (dBUser != null && user.Password != null)
 			{
@@ -44,8 +62,6 @@ namespace HomewOurK.Infrastructure.Services
 		public User? GetUserById(int userId)
 		{
 			var user = _usersRepository.GetById(userId);
-			if (user is not null)
-				user.Password = null;
 			return user;
 		}
 
@@ -61,13 +77,6 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool UpdateUser(User user)
 		{
-			var password = user.Password;
-
-			if (password != null)
-				user.Password = PasswordHasher.HashPassword(password);
-			else
-				return false;
-
 			return _usersRepository.Update(user);
 		}
 

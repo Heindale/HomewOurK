@@ -1,11 +1,13 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[Authorize]
 	public class AttachmentsController : ControllerBase
 	{
 		private readonly IAttachmentService _attachmentService;

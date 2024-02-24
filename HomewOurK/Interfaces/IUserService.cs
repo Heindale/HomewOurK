@@ -6,6 +6,10 @@ namespace HomewOurK.Application.Interfaces
 	{
 		User? GetUserById(int userId);
 
+		User? GetUserByEmail(string email);
+
+		bool UserInGroup(int groupId, string email);
+
 		IEnumerable<User> GetUsersByGroupId(int groupId);
 
 		IEnumerable<User> GetAll();

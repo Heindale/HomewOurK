@@ -1,11 +1,13 @@
 ﻿using HomewOurK.Domain.Entities;
 using HomewOurK.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
+	[Authorize]
 	[ApiController]
 	public class HomeworksController(IHomeworkService homeworkService) : ControllerBase
 	{

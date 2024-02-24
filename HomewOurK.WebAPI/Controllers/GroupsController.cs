@@ -1,10 +1,12 @@
 ﻿using HomewOurK.Domain.Entities;
 using HomewOurK.WebAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomewOurK.WebAPI.Controllers
 {
 	[Route("api/[controller]")]
+	[Authorize]
 	[ApiController]
 	public class GroupsController(IGroupService groupService) : ControllerBase
 	{
