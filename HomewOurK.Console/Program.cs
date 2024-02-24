@@ -60,7 +60,7 @@ namespace HomewOurKConsole
 
 			var teacherRepository = new GroupElementRepository<Teacher>(_context, (ILogger<GroupElementRepository<Teacher>>)logger);
 			var subjectRepository = new GroupElementRepository<Subject>(_context, (ILogger<GroupElementRepository<Subject>>)logger);
-			var teacherService = new TeacherService(teacherRepository, subjectRepository);
+			//var teacherService = new TeacherService(teacherRepository, subjectRepository);
 
 			Console.WriteLine("Объекты сохранены");
 

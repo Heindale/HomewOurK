@@ -4,6 +4,7 @@ using HomewOurK.Domain.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using HomewOurK.Domain.Common.Interfaces;
+using HomewOurK.Domain.Entities;
 
 namespace HomewOurK.Persistence.Repositories
 {
@@ -48,6 +49,12 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
+				var existingUser = _context.Users.FirstOrDefault(u => u.Id == entity.Id);
+				if (existingUser != null)
+				{
+					_context.Entry(existingUser).State = EntityState.Detached; // Отсоединяем существующий экземпляр
+				}
+
 				_context.Set<Entity>().Update(entity);
 				_context.SaveChanges();
 				return true;

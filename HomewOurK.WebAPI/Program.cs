@@ -29,10 +29,10 @@ namespace HomewOurK.WebAPI
 			builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie(options =>
 				{
-					options.Cookie.HttpOnly = false;
-					options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+					options.Cookie.HttpOnly = true;
+					options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 					options.Cookie.SameSite = SameSiteMode.Strict;
-					options.ExpireTimeSpan = TimeSpan.FromMinutes(30); // Время жизни cookie
+					options.ExpireTimeSpan = TimeSpan.FromDays(10000); // Время жизни cookie
 					options.SlidingExpiration = true;
 				});
 			builder.Services.AddDbContext<ApplicationContext>(options =>
