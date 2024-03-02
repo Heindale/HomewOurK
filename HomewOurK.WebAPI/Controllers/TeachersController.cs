@@ -1,6 +1,7 @@
 ﻿using HomewOurK.Application.Interfaces;
 using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
+using HomewOurK.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,29 +10,49 @@ namespace HomewOurK.WebAPI.Controllers
 	[Route("api/[controller]")]
 	[Authorize]
 	[ApiController]
-	public class TeachersController(ITeacherService teacherService, ISubjectService subjectService) : ControllerBase
+	public class TeachersController : ControllerBase
 	{
-		private readonly ITeacherService _teacherService = teacherService;
-		private readonly ISubjectService _subjectService = subjectService;
+		private readonly ITeacherService _teacherService;
+		private readonly ISubjectService _subjectService;
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IUserService _userService;
+
+		public TeachersController(ITeacherService teacherService, ISubjectService subjectService, IHttpContextAccessor httpContextAccessor, IUserService userService)
+		{
+			_teacherService = teacherService;
+			_subjectService = subjectService;
+			_userService = userService;
+			_httpContextAccessor = httpContextAccessor;
+		}
 
 		[HttpGet("GetTeachersBySubjectId")]
 		public IActionResult GetTeachersBySubjectId(int subjectId, int groupId)
 		{
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
 			var teachers = _subjectService.GetTeachersBySubjectId(subjectId, groupId);
 
-			if (teachers is not null && teachers.Any())
-				return Ok(teachers);
-			return NotFound("No teachers was found for the group with id = " + groupId);
+			if (_userService.UserInGroup(groupId, email))
+			{
+				if (teachers is not null && teachers.Any())
+					return Ok(teachers);
+				return NotFound("No teachers was found for the group with id = " + groupId);
+			}
+			return BadRequest("No teacher has been found for the current group");
 		}
 
 		[HttpGet("GetTeachers")]
 		public IActionResult GetTeachers(int groupId)
 		{
 			var teachers = _teacherService.GetTeachersByGroupId(groupId);
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
 
-			if (teachers.Any())
-				return Ok(teachers);
-			return NotFound("No teachers was found for the group with id = " + groupId);
+			if (_userService.UserInGroup(groupId, email))
+			{
+				if (teachers.Any())
+					return Ok(teachers);
+				return NotFound("No teachers was found for the group with id = " + groupId);
+			}
+			return BadRequest("No teacher has been found for the current group");
 		}
 
 		[HttpGet("GetTeacher")]
