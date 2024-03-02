@@ -50,7 +50,7 @@ namespace HomewOurK.WebAPI.Controllers
 				}
 				return NotFound("No users were found for the group with id = " + groupId);
 			}
-			return BadRequest();
+			return Unauthorized();
 		}
 
 		[HttpGet("GetUser")]

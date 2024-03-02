@@ -1,13 +1,22 @@
 ﻿using HomewOurK.Application.Interfaces.Repositories;
 using HomewOurK.Domain.Entities;
+using HomewOurK.Persistence.Repositories;
 using HomewOurK.WebAPI.Services.Interfaces;
 
 namespace HomewOurK.Infrastructure.Services
 {
-	public class GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository) : IGroupService
+	public class GroupService : IGroupService
 	{
-		private readonly IBaseEntityRepository<Group> _groupsRepository = groupsRepository;
-		private readonly IGroupsUsersRepository _groupsUsersRepository = groupsUsersRepository;
+		private readonly IBaseEntityRepository<Group> _groupsRepository;
+		private readonly IBaseEntityRepository<User> _userRepository;
+		private readonly IGroupsUsersRepository _groupsUsersRepository;
+
+		public GroupService(IBaseEntityRepository<Group> groupsRepository, IGroupsUsersRepository groupsUsersRepository, IBaseEntityRepository<User> userRepository)
+		{
+			_groupsRepository = groupsRepository;
+			_userRepository = userRepository;
+			_groupsUsersRepository = groupsUsersRepository;
+		}
 
 		public bool AddUserToGroup(Group group, User user)
 		{
@@ -24,7 +33,17 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool AddUserToGroup(int groupId, int userId)
 		{
-			return _groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
+			//return _groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
+
+			var group = _groupsRepository.GetById(groupId);
+			var user = _userRepository.GetById(userId);
+
+			if (group != null && user != null)
+			{
+				group.Users.Add(user);
+				return _groupsRepository.Update(group);
+			}
+			return false;
 		}
 
 		public bool CreateNewGroup(Group group)
