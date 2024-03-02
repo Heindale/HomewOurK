@@ -4,6 +4,7 @@ using HomewOurK.Infrastructure.Services;
 using HomewOurK.WebAPI.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace HomewOurK.WebAPI.Controllers
 {
@@ -68,26 +69,50 @@ namespace HomewOurK.WebAPI.Controllers
 		[HttpPost]
 		public IActionResult AddTeacher(Teacher teacher)
 		{
-			teacher.Id = 0;
-			if (_teacherService.AddTeacher(teacher))
-				return Ok(teacher);
-			return BadRequest("The teacher has not been added");
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+
+			if (_userService.UserInGroup(teacher.GroupId, email))
+			{
+				teacher.Id = 0;
+				if (_teacherService.AddTeacher(teacher))
+					return Ok(teacher);
+				return BadRequest("The teacher has not been added");
+			}
+			return Unauthorized();
 		}
 
 		[HttpPatch]
 		public IActionResult UpdateTeacher(Teacher teacher)
 		{
-			if (_teacherService.UpdateTeacher(teacher))
-				return Ok(teacher);
-			return BadRequest("The teacher has not been updated");
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+
+			if (_userService.UserInGroup(teacher.GroupId, email))
+			{
+				if (_teacherService.UpdateTeacher(teacher))
+					return Ok(teacher);
+				return BadRequest("The teacher has not been updated");
+			}
+			return Unauthorized();
 		}
 
 		[HttpDelete]
-		public IActionResult DeleteTeacher(Teacher teacher)
+		public IActionResult DeleteTeacher(int teacherId, int groupId)
 		{
-			if (_teacherService.DeleteTeacher(teacher))
-				return Ok(teacher);
-			return BadRequest("The teacher has not been deleted");
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+
+			if (_userService.UserInGroup(groupId, email))
+			{
+				var teacher = new Teacher
+				{
+					FullName = "deleted teacher",
+					GroupId = groupId,
+					Id = teacherId
+				};
+				if (_teacherService.DeleteTeacher(teacher))
+					return Ok(teacher);
+				return BadRequest("The teacher has not been deleted");
+			}
+			return Unauthorized();
 		}
 	}
 }
