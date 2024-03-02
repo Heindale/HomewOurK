@@ -88,7 +88,7 @@ namespace HomewOurK.WebAPI.Controllers
 			{
 				var claims = new List<Claim>
 				{
-					new Claim(ClaimTypes.Email, user.Email)
+					new(ClaimTypes.Email, user.Email)
 				};
 
 				var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

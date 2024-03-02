@@ -1,4 +1,6 @@
-﻿using HomewOurK.Domain.Entities;
+﻿using HomewOurK.Application.Interfaces;
+using HomewOurK.Domain.Entities;
+using HomewOurK.WebAPI.Helpers;
 using HomewOurK.WebAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +10,18 @@ namespace HomewOurK.WebAPI.Controllers
 	[Route("api/[controller]")]
 	[Authorize]
 	[ApiController]
-	public class GroupsController(IGroupService groupService) : ControllerBase
+	public class GroupsController : ControllerBase
 	{
-		private readonly IGroupService _groupService = groupService;
+		private readonly IGroupService _groupService;
+		private readonly IHttpContextAccessor _httpContextAccessor;
+		private readonly IUserService _userService;
+
+		public GroupsController(IGroupService groupService, IHttpContextAccessor httpContextAccessor, IUserService userService)
+		{
+			_groupService = groupService;
+			_httpContextAccessor = httpContextAccessor;
+			_userService = userService;
+		}
 
 		[HttpGet]
 		public IActionResult GetAll()
@@ -46,24 +57,51 @@ namespace HomewOurK.WebAPI.Controllers
 		public IActionResult AddGroup(Group group)
 		{
 			if (_groupService.CreateNewGroup(group))
-				return Ok();
-			return BadRequest();
+			{
+				var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+				var user = _userService.GetUserByEmail(email);
+
+				if (user != null)
+					_groupService.AddUserToGroup(group.Id, user.Id);
+				else
+					return BadRequest("Current user is null");
+				return Ok(group);
+			}
+			return BadRequest("The group hasn't added");
 		}
 
 		[HttpPatch]
 		public IActionResult UpdateGroup(Group group)
 		{
-			if (_groupService.UpdateGroup(group))
-				return Ok();
-			return BadRequest();
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+
+			if (_userService.UserInGroup(group.Id, email))
+			{
+				if (_groupService.UpdateGroup(group))
+					return Ok(group);
+				return BadRequest("The group hasn't updated");
+			}
+			return Unauthorized();
 		}
 
 		[HttpDelete]
-		public IActionResult DeleteGroup(Group group)
+		public IActionResult DeleteGroup(int groupId)
 		{
-			if (_groupService.DeleteGroup(group))
-				return Ok();
-			return BadRequest();
+			var email = CookieHelper.GetEmailByCookie(_httpContextAccessor);
+
+			if (_userService.UserInGroup(groupId, email))
+			{
+				var group = new Group
+				{
+					Id = groupId,
+					Name = "deleted group"
+				};
+
+				if (_groupService.DeleteGroup(group))
+					return Ok(group);
+				return BadRequest("The group hasn't deleted");
+			}
+			return Unauthorized();
 		}
 	}
 }
