@@ -10,6 +10,10 @@ namespace HomewOurK.Domain.Entities
 		[StringLength(25)]
 		public string Name { get; set; } = "";
 
+		[Required]
+		[StringLength(50)]
+		public string UniqGroupName { get; set; }
+
 		[Range(0, 99)]
 		public int? Grade { get; set; }
 
