@@ -14,6 +14,7 @@ namespace HomewOurK.Persistence.Contexts
 		public DbSet<Teacher> Teachers { get; set; }
 		public DbSet<User> Users { get; set; }
 		public DbSet<GroupsUsers> GroupsUsers { get; set; }
+		public DbSet<Proposal> Proposals { get; set; }
 		public DbSet<Attachment> Attachments { get; set; }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

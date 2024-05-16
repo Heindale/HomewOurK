@@ -3,6 +3,7 @@ using System;
 using HomewOurK.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomewOurK.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240511164410_add-UniqGroupName")]
+    partial class addUniqGroupName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,7 +54,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("SubjectId", "SubjectGroupId");
 
-                    b.ToTable("Attachments", (string)null);
+                    b.ToTable("Attachments");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.Group", b =>
@@ -81,7 +84,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Groups", (string)null);
+                    b.ToTable("Groups");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.GroupsUsers", b =>
@@ -108,7 +111,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("GroupsUsers", (string)null);
+                    b.ToTable("GroupsUsers");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.Homework", b =>
@@ -151,7 +154,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("SubjectId", "SubjectGroupId");
 
-                    b.ToTable("Homeworks", (string)null);
+                    b.ToTable("Homeworks");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.Subject", b =>
@@ -171,7 +174,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Subjects", (string)null);
+                    b.ToTable("Subjects");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.Teacher", b =>
@@ -191,7 +194,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Teachers", (string)null);
+                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.User", b =>
@@ -234,7 +237,7 @@ namespace HomewOurK.Persistence.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("SubjectTeacher", b =>
@@ -255,7 +258,7 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.HasIndex("TeachersId", "TeachersGroupId");
 
-                    b.ToTable("SubjectTeacher", (string)null);
+                    b.ToTable("SubjectTeacher");
                 });
 
             modelBuilder.Entity("HomewOurK.Domain.Entities.Attachment", b =>
