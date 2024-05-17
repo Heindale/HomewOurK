@@ -1,4 +1,5 @@
 ﻿using HomewOurK.Domain.Common;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -12,7 +13,7 @@ namespace HomewOurK.Domain.Entities
 
 		[Required]
 		[StringLength(50)]
-		public string UniqGroupName { get; set; }
+		public string? UniqGroupName { get; set; }
 
 		[Range(0, 99)]
 		public int? Grade { get; set; }

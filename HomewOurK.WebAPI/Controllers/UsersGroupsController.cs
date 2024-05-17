@@ -1,4 +1,5 @@
 ﻿using HomewOurK.Application.Interfaces;
+using HomewOurK.Domain.Entities;
 using HomewOurK.Infrastructure.Services;
 using HomewOurK.WebAPI.Helpers;
 using HomewOurK.WebAPI.Services.Interfaces;
@@ -19,10 +20,19 @@ namespace HomewOurK.WebAPI.Controllers
 			_groupService = groupService;
 		}
 
-		[HttpPost]
-		public IActionResult AddUserToGroup(int groupId, int userId)
+		[HttpGet("GetGroupsWithoutUser")]
+		public IActionResult GetGroupsWithoutUser(int userId)
 		{
-			if (_groupService.AddUserToGroup(groupId, userId))
+			var groups = _groupService.GetGroupsWithoutUserId(userId);
+			if (groups.Any())
+				return Ok(groups);
+			return BadRequest();
+		}
+
+		[HttpPost]
+		public IActionResult AddUserToGroup(GroupsUsers groupsUsers)
+		{
+			if (_groupService.AddUserToGroup(groupsUsers.GroupId, groupsUsers.UserId))
 				return Ok();
 			return BadRequest();
 		}

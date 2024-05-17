@@ -28,6 +28,10 @@ namespace HomewOurK.Persistence.Contexts
 				.HasMany(c => c.Users)
 				.WithMany(s => s.Groups)
 				.UsingEntity<GroupsUsers>();
+
+			modelBuilder.Entity<Group>()
+				.HasIndex(g => g.UniqGroupName)
+				.IsUnique();
 		}
 	}
 }

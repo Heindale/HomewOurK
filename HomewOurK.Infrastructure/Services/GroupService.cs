@@ -97,6 +97,22 @@ namespace HomewOurK.Infrastructure.Services
 			return groups;
 		}
 
+		public IEnumerable<Group> GetGroupsWithoutUserId(int userId)
+		{
+			var groupsIdsByUser = _groupsUsersRepository.Entities.Where(x => x.UserId == userId).Select(x => x.GroupId).ToList();
+			var allGroupsIds = _groupsRepository.Entities.Select(g => g.Id);
+			var groupsIdsWithoutUser = allGroupsIds.Except(groupsIdsByUser).ToList();
+
+			List<Group> groups = [];
+			for (int i = 0; i < groupsIdsWithoutUser.Count; i++)
+			{
+				var newGroup = _groupsRepository.GetById(groupsIdsWithoutUser[i]);
+				if (newGroup is not null)
+					groups.Add(newGroup);
+			}
+			return groups;
+		}
+
 		public bool UpdateGroup(Group group)
 		{
 			return _groupsRepository.Update(group);

@@ -11,14 +11,14 @@ namespace HomewOurK.WebAPI.Controllers
 	{
 		IProposalService _proposalService;
 
-        public ProposalsController(IProposalService proposalService)
-        {
+		public ProposalsController(IProposalService proposalService)
+		{
 			_proposalService = proposalService;
-        }
+		}
 
 		[HttpGet]
-		public IActionResult GetProposals(int groupId) 
-		{ 
+		public IActionResult GetProposals(int groupId)
+		{
 			var proposals = _proposalService.GetProposalsByGroupId(groupId);
 
 			if (proposals.Any())
@@ -26,7 +26,7 @@ namespace HomewOurK.WebAPI.Controllers
 			return NotFound("No proposals was found for the group with id = " + groupId);
 		}
 
-        [HttpPost]
+		[HttpPost]
 		public IActionResult AddProposal(Proposal proposal)
 		{
 			proposal.Id = 0;
@@ -35,12 +35,11 @@ namespace HomewOurK.WebAPI.Controllers
 			return BadRequest("The proposal has not been added");
 		}
 
-        [HttpDelete]
-		public IActionResult DeleteProposal(Proposal proposal)
+		[HttpDelete]
+		public IActionResult DeleteProposal(int id)
 		{
-			proposal.Id = 0;
-			if (_proposalService.DeleteProposal(proposal))
-				return Ok(proposal);
+			if (_proposalService.DeleteProposal(new Proposal { Id = id }))
+				return Ok(new Proposal { Id = id });
 			return BadRequest("The proposal has not been deleted");
 		}
 	}

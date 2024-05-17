@@ -30,12 +30,7 @@ namespace HomewOurK.Infrastructure.Services
 
 		public bool DeleteProposal(Proposal proposal)
 		{
-			var proposals = _proposalRepository.GetAll();
-
-			if (proposals.FirstOrDefault(p => p.GroupId == proposal.GroupId) != null
-				&& proposals.FirstOrDefault(p => p.UserId == proposal.UserId) != null)
-				return _proposalRepository.Delete(proposal);
-			return false;
+			return _proposalRepository.Delete(proposal);
 		}
 
 		public IEnumerable<Proposal> GetProposalsByGroupId(int groupId)
