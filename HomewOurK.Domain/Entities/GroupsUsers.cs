@@ -16,6 +16,8 @@ namespace HomewOurK.Domain.Entities
 		[JsonIgnore]
 		public User? User { get; set; }
 
+		public Role Role { get; set; } = Role.None;
+
 		public int UserLevel { get; set; }
 
 		public int UserExperience { get; set; }

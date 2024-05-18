@@ -3,6 +3,7 @@ using System;
 using HomewOurK.Persistence.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HomewOurK.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20240518171212_AddRole")]
+    partial class AddRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,9 +102,6 @@ namespace HomewOurK.Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("CreatedHomeworksCount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Role")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserExperience")
@@ -248,6 +248,9 @@ namespace HomewOurK.Persistence.Migrations
 
                     b.Property<DateOnly>("RegistrationDate")
                         .HasColumnType("date");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Surname")
                         .HasMaxLength(25)

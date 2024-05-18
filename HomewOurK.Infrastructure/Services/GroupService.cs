@@ -31,19 +31,20 @@ namespace HomewOurK.Infrastructure.Services
 			return _groupsUsersRepository.Add(groupsUsers);
 		}
 
-		public bool AddUserToGroup(int groupId, int userId)
+		public bool AddUserToGroup(GroupsUsers groupsUsers)
 		{
 			//return _groupsUsersRepository.Add(new GroupsUsers { GroupId = groupId, UserId = userId });
 
-			var group = _groupsRepository.GetById(groupId);
-			var user = _userRepository.GetById(userId);
+			//var group = _groupsRepository.GetById(groupId);
+			//var user = _userRepository.GetById(userId);
 
-			if (group != null && user != null)
-			{
-				group.Users.Add(user);
-				return _groupsRepository.Update(group);
-			}
-			return false;
+			//if (group != null && user != null)
+			//{
+			//	group.Users.Add(user);
+			//	return _groupsRepository.Update(group);
+			//}
+			//return false;
+			return _groupsUsersRepository.Add(groupsUsers);
 		}
 
 		public bool CreateNewGroup(Group group)

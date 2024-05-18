@@ -19,7 +19,7 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 
 		bool AddUserToGroup(Group group, User user);
 
-		bool AddUserToGroup(int groupId, int userId);
+		bool AddUserToGroup(GroupsUsers groupsUsers);
 
 		bool DeleteUserFromGroup(Group group, User user);
 

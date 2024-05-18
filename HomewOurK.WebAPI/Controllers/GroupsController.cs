@@ -62,7 +62,14 @@ namespace HomewOurK.WebAPI.Controllers
 				var user = _userService.GetUserByEmail(email);
 
 				if (user != null)
-					_groupService.AddUserToGroup(group.Id, user.Id);
+					_groupService.AddUserToGroup(new GroupsUsers
+					{
+						User = user,
+						UserId = user.Id,
+						Group = group,
+						GroupId = group.Id,
+						Role = Role.GroupCreator
+					});
 				else
 					return BadRequest("Current user is null");
 				return Ok(group);

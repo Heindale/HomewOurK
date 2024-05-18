@@ -49,7 +49,7 @@ namespace HomewOurK.Persistence.Repositories
 		{
 			try
 			{
-				var existingUser = _context.Users.FirstOrDefault(u => u.Id == entity.Id);
+				var existingUser = _context.Set<Entity>().FirstOrDefault(u => u.Id == entity.Id);
 				if (existingUser != null)
 				{
 					_context.Entry(existingUser).State = EntityState.Detached; // Отсоединяем существующий экземпляр

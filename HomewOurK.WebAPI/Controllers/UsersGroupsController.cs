@@ -32,7 +32,7 @@ namespace HomewOurK.WebAPI.Controllers
 		[HttpPost]
 		public IActionResult AddUserToGroup(GroupsUsers groupsUsers)
 		{
-			if (_groupService.AddUserToGroup(groupsUsers.GroupId, groupsUsers.UserId))
+			if (_groupService.AddUserToGroup(groupsUsers))
 				return Ok();
 			return BadRequest();
 		}
