@@ -19,7 +19,9 @@ namespace HomewOurK.Persistence.Contexts
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin");
+			//optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=homewourktest1;Username=postgres;Password=admin");
+			optionsBuilder.UseNpgsql("Host=aws-0-eu-central-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.wwvgnrsbhhsevbbpesxo;Password=Ej9-FAJ-cgg-78y");
+			//supabase password Ej9-FAJ-cgg-78y
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)

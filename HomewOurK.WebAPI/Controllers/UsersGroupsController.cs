@@ -29,6 +29,15 @@ namespace HomewOurK.WebAPI.Controllers
 			return BadRequest();
 		}
 
+		[HttpGet("GetGroupsUsers")]
+		public IActionResult GetGroupsUsers(int groupId, int userId)
+		{
+			var groupsUsers = _groupService.GetGroupsUsers(groupId, userId);
+			if (groupsUsers != null)
+				return Ok(groupsUsers);
+			return BadRequest();
+		}
+
 		[HttpPost]
 		public IActionResult AddUserToGroup(GroupsUsers groupsUsers)
 		{
@@ -41,6 +50,14 @@ namespace HomewOurK.WebAPI.Controllers
 		public IActionResult DeleteUserFromGroup(int groupId, int userId)
 		{
 			if (_groupService.DeleteUserFromGroup(groupId, userId))
+				return Ok();
+			return BadRequest();
+		}
+
+		[HttpPatch]
+		public IActionResult UpdateUserFromGroup(GroupsUsers groupsUsers)
+		{
+			if (_groupService.UpdateGroupsUsers(groupsUsers))
 				return Ok();
 			return BadRequest();
 		}

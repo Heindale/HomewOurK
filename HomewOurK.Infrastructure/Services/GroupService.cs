@@ -118,5 +118,15 @@ namespace HomewOurK.Infrastructure.Services
 		{
 			return _groupsRepository.Update(group);
 		}
+
+		public GroupsUsers? GetGroupsUsers(int groupId, int userId)
+		{
+			return _groupsUsersRepository.GetById(groupId, userId);
+		}
+
+		public bool UpdateGroupsUsers(GroupsUsers groupsUsers)
+		{
+			return _groupsUsersRepository.Update(groupsUsers);
+		}
 	}
 }

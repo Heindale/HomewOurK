@@ -9,7 +9,12 @@ namespace HomewOurK.WebAPI.Services.Interfaces
 		IEnumerable<Group> GetAll();
 
 		IEnumerable<Group> GetGroupsByUserId(int userId);
+
 		IEnumerable<Group> GetGroupsWithoutUserId(int userId);
+
+		GroupsUsers? GetGroupsUsers(int groupId, int userId);
+
+		public bool UpdateGroupsUsers(GroupsUsers groupsUsers);
 
 		bool UpdateGroup(Group group);
 
